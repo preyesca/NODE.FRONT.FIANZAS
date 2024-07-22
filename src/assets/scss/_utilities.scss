@@ -1,0 +1,63 @@
+.d-flex {
+    display: flex !important;
+}
+
+.align-items-center {
+    align-items: center !important;
+}
+
+.justify-content-space-between {
+    justify-content: space-between !important;
+}
+
+.mb-25 {
+    margin-bottom: 25px !important;
+}
+
+.border-none {
+    border: none !important;
+}
+
+.rounded-circle {
+    border-radius: 50%;
+}
+
+.position-relative {
+    position: relative !important;
+}
+
+.bg-transparent {
+    background-color: transparent !important;
+}
+
+.border-active {
+    border-left: 5px solid #17C95E;
+}
+
+.border-inactive {
+    border-left: 5px solid #b60d0d;
+}
+
+.border-normal {
+    border-left: 5px solid var(--primaryColor);
+}
+
+
+
+
+.color-teggium-primary {
+    color: var(--primaryColor);
+}
+
+.password-field {
+    font-family: text-security-disc;
+    -webkit-text-security: disc;
+}
+
+.cursor-pointer {
+    cursor: pointer !important; 
+}
+
+.color-cian-teggium {
+    color: var(--cianTeggiumColor);
+}

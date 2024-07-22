@@ -1,0 +1,205 @@
+<app-share-breadcrumb [breadcrumbs]="breadcrumbs"></app-share-breadcrumb>
+
+<mat-card class="mb-25 teggium-card" *ngIf="folio">
+    <mat-card-header>
+        <div class="teggium-titulo-encabezado">
+            <h5 class="teggium-titulo">
+                Contacto telefonico<span *ngIf="readonlyModule" class="title-readonlyModule"
+                >Modo consulta</span>
+            </h5>
+            <app-fnz-encabezado [folio]="folio.folio"></app-fnz-encabezado>
+            <app-fnz-flujo-consulta *ngIf="readonlyModule" [flujoConsulta]="folio.flujoConsulta"></app-fnz-flujo-consulta>
+        </div>
+    </mat-card-header>
+    <mat-card-content>
+
+  <mat-tab-group>
+      <mat-tab label="CONTACTO TELEFONICO">
+          <div class="mt-4">
+              <form [formGroup]="frmContactoTelefonico" autocomplete="false" (submit)="agregarContacto()">
+                  <div class="row">
+                      <div class="col-sm-6 col-md-4">
+                          <mat-form-field appearance="outline" class="w-100">
+                              <mat-label>Tipo de llamada</mat-label>
+                              <mat-select  placeholder="Tipo llamada" [required]="true" formControlName="idTipoLlamada"
+                                (selectionChange)="selectLlamada($event)">
+                                  <mat-option *ngFor="let llamada of catalogos?.tipoLlamada" [value]="llamada.clave">
+                                      {{llamada.descripcion}}
+                                  </mat-option>
+                              </mat-select>
+                          </mat-form-field>
+                      </div>
+      
+                      <div class="col-sm-6 col-md-4">
+                          <mat-form-field appearance="outline" class="w-100">
+                              <mat-label>Estatus</mat-label>
+                              <mat-select placeholder="Estatus" [required]="true" formControlName="idEstatusLlamada"
+                                  (selectionChange)="selectEstatus($event.value)">
+                                  <mat-option *ngFor="let estatus of estatus" [value]="estatus.clave">
+                                      {{estatus.descripcion}}
+                                  </mat-option>
+                              </mat-select>
+                          </mat-form-field>
+                      </div>
+      
+                      <div class="col-sm-6 col-md-4">
+                          <mat-form-field appearance="outline" class="w-100">
+                              <mat-label>Fecha de próxima llamada</mat-label>
+                              <input matInput formControlName="fechaProximaLlamada" id="fechaProximaLlamada">
+                              <mat-datepicker-toggle matSuffix></mat-datepicker-toggle>
+                              <mat-datepicker #picker></mat-datepicker>
+                          </mat-form-field>
+                      </div>
+      
+                  </div>
+      
+                  <div class="row">
+                      <div class="col-sm-12">
+                          <mat-form-field appearance="outline" class="w-100">
+                              <mat-label>Observaciones</mat-label>
+                              <textarea matInput formControlName="observaciones" maxlength="500" spellcheck="true"></textarea>
+                          </mat-form-field>
+                      </div>
+      
+                  </div>
+                  <div class="row text-end">
+                      <div class="col-12  mt-2 mb-2">
+                          <button type="button" class="btn btn-danger mx-1" (click)="return()">Cancelar</button>
+                          <button type="submit" class="btn btn-primary" *ngIf="!readonlyModule">Guardar</button>
+                      </div>
+                  </div>
+                  
+                  <mat-table mat-table matSort [dataSource]="dataSource">
+                      <ng-container matColumnDef="fechaContacto">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha contacto </mat-header-cell>
+                          <mat-cell *matCellDef="let row; let index = index">{{row.fechaContacto | pipeDatetimeFormat}}
+                          </mat-cell>
+                      </ng-container>
+                      <ng-container matColumnDef="usuario">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header> Usuario </mat-header-cell>
+                          <mat-cell *matCellDef="let row; let index = index">{{row.usuario}}
+                          </mat-cell>
+                      </ng-container>
+                      <ng-container matColumnDef="tipoLlamada">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header> Llamada </mat-header-cell>
+                          <mat-cell *matCellDef="let row; let index = index">{{row.tipoLlamada}}
+                          </mat-cell>
+                      </ng-container>
+                      <ng-container matColumnDef="estatus">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </mat-header-cell>
+                          <mat-cell *matCellDef="let row; let index = index">{{row.estatus}}
+                          </mat-cell>
+                      </ng-container>
+                      <ng-container matColumnDef="fechaProximaLlamada">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header> Próxima llamada </mat-header-cell>
+                          <mat-cell *matCellDef="let row; let index = index">{{row.fechaProximaLlamada | pipeDatetimeFormat}}
+                          </mat-cell>
+                      </ng-container>
+                      <ng-container matColumnDef="observaciones">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header> Observaciones </mat-header-cell>
+                          <mat-cell *matCellDef="let row; let index = index">{{row.observaciones}}
+                          </mat-cell>
+                      </ng-container>
+      
+                      <mat-header-row *matHeaderRowDef="displayColumns"></mat-header-row>
+                      <mat-row *matRowDef="let row; let i = index; columns: displayColumns;"></mat-row>
+                      
+                      <tr class="row-empty" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">No hay información para mostrar.</td>
+                    </tr>   
+                  </mat-table>
+      
+                  <mat-paginator 
+                    [hidden]="dataSource.data.length === 0" 
+                    [pageSizeOptions]="itemsPorPage" 
+                    showFirstLastButtons>
+                  </mat-paginator>
+      
+              </form>
+          </div>
+      </mat-tab>
+    <mat-tab label="INFORMACION CONTACTO">
+        <div class="mt-4">
+            <form [formGroup]="frmInformacionContacto" autocomplete="false">
+    
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Contacto Correspondencia</mat-label>
+                        <input matInput formControlName="nombre">
+                        <mat-error> Obligatorio </mat-error>
+                      </mat-form-field>
+                    </div>
+    
+                    <div class="col-sm-4">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Tipo contacto</mat-label>
+                        <mat-select placeholder="Tipo contacto" formControlName="tipo">
+                          <mat-option *ngFor="let contacto of catalogos?.tipoContacto" [value]="contacto.clave">
+                            {{contacto.descripcion}}
+                          </mat-option>
+                        </mat-select>
+                        <mat-error> Obligatorio </mat-error>
+                      </mat-form-field>
+                    </div>
+    
+                  </div>
+    
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <mat-form-field class="w-100"  appearance="outline" floatLabel="always">
+                        <mat-label>Correo electrónico</mat-label>
+                            <mat-chip-grid #chipGrid formControlName="emailCorrespondencia">
+                            <mat-chip color="primary" *ngFor="let correo of correos" (removed)="remove(correo)">
+                                {{correo.name}}
+                                <button matChipRemove [attr.aria-label]="'remove ' + correo.name">
+                                    <mat-icon>cancel</mat-icon>
+                                </button>
+                            </mat-chip>
+                            <input 
+                                matinput
+                                placeholder="ejemplo@dominio.com" 
+                                [matChipInputFor]="chipGrid"
+                                [matChipInputAddOnBlur]="true"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                (matChipInputTokenEnd)="add($event)" />
+                        </mat-chip-grid>
+                        <mat-error *ngIf="chipGrid.errorState"></mat-error>
+                    </mat-form-field>
+                    </div>
+    
+                    <div class="col-sm-12">
+                      <mat-label>Para agregar más de un correo electrónico escriba uno válido y presione enter.</mat-label>
+                    </div>
+                    
+                  </div>
+    
+                <div class="text-end" *ngIf="!readonlyModule">
+                  <button type="button" class="btn btn-secondary" (click)="modalOpen=true">
+                      <span>Agregar Teléfono </span>
+                  </button>
+              </div>  
+      
+              <app-fnz-info-telefono-correspondencia 
+              (itemChanged)="onItemChanged($event)"
+              (modalOpenChanged)="onModalOpenChanged($event)"
+              (reload)="reload($event)"
+              [lstTelefonosCorrespondecia]="lstTelefonosCorrespondecia"
+              [modoConsulta]="readonlyModule">
+             </app-fnz-info-telefono-correspondencia>
+      
+             <app-fnz-modal-telefono-correspondencia *ngIf="modalOpen" [title]="'Teléfonos del contacto'" (closeModal)="closeModal($event)"
+             [itemTelefonoCorrespondencia]="itemTelefonoCorrespondencia">    
+             </app-fnz-modal-telefono-correspondencia>
+    
+                <div class="modal-footer mt-4 mb-4">
+                  <button type="button" class="btn btn-primary" (click)="actualizarContacto()"
+                  *ngIf="!readonlyModule"> Actualizar </button>
+                </div>
+              </form> 
+        </div>
+    </mat-tab>
+  </mat-tab-group>
+   
+    </mat-card-content>
+</mat-card>

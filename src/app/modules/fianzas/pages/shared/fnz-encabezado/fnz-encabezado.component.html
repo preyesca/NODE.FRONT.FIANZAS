@@ -1,0 +1,69 @@
+<div class="c-encabezado">
+  <div class="c-encabezado-inner">
+    <div class="row-right">
+      <button class="btn-more" (click)="mostrarDetalle=!mostrarDetalle">
+        Ver detalles
+        <i class="flaticon-search"></i>
+      </button>
+    </div>
+    <div class="c-encabezado-body">
+      <div class="row">
+        <div class="col-md-3">
+          <label>Folio trámite:</label>
+        </div>
+        <div class="col-md-3">
+          <span>{{ header.folioCliente }}</span>
+        </div>
+        <div class="col-md-3">
+          <label>Aseguradora:</label>
+        </div>
+        <div class="col-md-3">
+          <span>{{ header.aseguradora }}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <label>Asegurado:</label>
+        </div>
+        <div class="col-md-3">
+          <span>{{ header.asegurado }}</span>
+        </div>
+        <div class="col-md-3">
+          <label>Fecha vigencia:</label>
+        </div>
+        <div class="col-md-3">
+          <span>{{ header.fechaVigencia | pipeDateFormat }}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <label>Unidad:</label>
+        </div>
+        <div class="col-md-3">
+          <span>{{ header.unidad }}</span>
+        </div>
+        <div class="col-md-3">
+          <label>Tipo movimiento:</label>
+        </div>
+        <div class="col-md-3">
+          <span>{{ header.tipoMovimiento }}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <label>Riesgo:</label>
+        </div>
+        <div class="col-md-3">
+          <span>{{ header.riesgo }}</span>
+        </div>
+        <div class="col-md-3">
+          <label>Estatus bitácora:</label>
+        </div>
+        <div class="col-md-3">
+          <span>{{ header.estatusBitacora }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-fnz-encabezado-detalle *ngIf="mostrarDetalle"></app-fnz-encabezado-detalle>
+</div>

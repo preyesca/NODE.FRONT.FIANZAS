@@ -1,0 +1,17 @@
+.toggle {
+  background-color: #fafcff;
+}
+
+.panel-title {
+  color: #038fb6;
+}
+
+.active .mititle {
+  display: inline-block;
+  font-size: 14px;
+  border-radius: 5px;
+  background: #dbf7ff;
+  color: #06576d;
+  padding: 6px 15px;
+  font-weight: 600;
+}

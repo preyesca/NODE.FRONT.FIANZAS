@@ -1,0 +1,162 @@
+<app-share-breadcrumb [breadcrumbs]="breadcrumbs"></app-share-breadcrumb>
+<mat-card class="mb-25 teggium-card">
+  <mat-card-header>
+    <h5 class="teggium-titulo">
+      <mat-icon inline>manage_accounts</mat-icon>
+      <span class="mx-2">Mi perfil</span>
+    </h5>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="frmUsuario" (ngSubmit)="submitGeneralInfo()">
+      <div class="row">
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>{{
+              "administracion.usuario.form.nombre" | translate
+            }}</mat-label>
+            <input
+              type="text"
+              matInput
+              maxlength="35"
+              formControlName="nombre"
+            />
+            <mat-icon matPrefix>person_outline</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>{{
+              "administracion.usuario.form.primerApellido" | translate
+            }}</mat-label>
+            <input
+              type="text"
+              matInput
+              maxlength="35"
+              formControlName="primerApellido"
+            />
+            <mat-icon matPrefix>person_outline</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>{{
+              "administracion.usuario.form.segundoApellido" | translate
+            }}</mat-label>
+            <input
+              type="text"
+              matInput
+              maxlength="35"
+              formControlName="segundoApellido"
+            />
+            <mat-icon matPrefix>person_outline</mat-icon>
+          </mat-form-field>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>{{
+              "administracion.usuario.form.correoElectronico" | translate
+            }}</mat-label>
+            <input
+              type="email"
+              maxlength="100"
+              matInput
+              formControlName="correoElectronico"
+            />
+            <mat-icon matPrefix>alternate_email</mat-icon>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row text-end">
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary my-2 py-2">
+            Guardar información
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <h5 class="teggium-titulo">
+      <mat-icon inline>key</mat-icon>
+      <span class="mx-2">Cambiar contraseña</span>
+    </h5>
+
+    <form [formGroup]="frmUsuarioPassword" (ngSubmit)="submitChangePassword()">
+      <div class="row">
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Contraseña</mat-label>
+            <input
+              [type]="hide ? 'password' : 'text'"
+              matInput
+              formControlName="password"
+            />
+            <mat-icon matPrefix>lock</mat-icon>
+            <button type="button" class="password-icon" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-pressed]="hide">
+              <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Nueva Contraseña</mat-label>
+            <input
+              [type]="hideNew ? 'password' : 'text'"
+              matInput
+              formControlName="newPassword"
+            />
+            <mat-icon matPrefix>lock</mat-icon>
+            <button type="button" class="password-icon" mat-icon-button matSuffix (click)="hideNew = !hideNew" [attr.aria-pressed]="hideNew">
+              <mat-icon>{{ hideNew ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+          </mat-form-field>
+          <mat-error *ngIf="checkField('newPassword', 'pattern')">
+            Error en la contraseña debe tener mínimo:
+            <br>
+            <ul>
+              <li>8 caracteres</li>
+              <li>1 mayúscula</li>
+              <li>1 minúscula</li>
+              <li>1 caracter especial (! @ # $ *)</li>
+              <li>1 número</li>
+            </ul>
+          </mat-error>
+        </div>
+
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Confirmar Contraseña</mat-label>
+            <input
+              [type]="hideConfirm ? 'password' : 'text'"
+              matInput
+              formControlName="confirmPassword"
+            />
+            <mat-icon matPrefix>lock</mat-icon>
+            <button type="button" class="password-icon" mat-icon-button matSuffix (click)="hideConfirm = !hideConfirm" [attr.aria-pressed]="hideConfirm">
+              <mat-icon>{{ hideConfirm ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+          </mat-form-field>
+          <mat-error *ngIf="checkField('confirmPassword', 'passwordnoequal')">
+            Las contraseñas deben coincidir.
+          </mat-error>
+        </div>
+
+      </div>
+
+      <div class="row text-end">
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary my-2 py-2">
+            Cambiar contraseña
+          </button>
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

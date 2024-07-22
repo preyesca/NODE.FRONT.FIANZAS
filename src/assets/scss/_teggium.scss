@@ -1,0 +1,51 @@
+.teggium-titulo {
+    display: flex;
+    align-items: center;
+    color: #000 !important;
+    font-size: 22px;
+    font-weight: bold;
+    position: relative;
+    padding: 0 0 0.77rem 0;
+    margin-bottom: 1.5rem;
+    // text-transform: uppercase;
+    text-align: start;
+}
+
+.teggium-titulo:after {
+    content: '';
+    display: block;
+    width: 1.3rem;
+    height: 4px;
+    border-radius: 4px;
+    background: #6EE1EB;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+
+
+// Default BTN
+.default-btn {
+    border: 0;
+    font-size: 13.5px;
+    border-radius: 5px;
+    color: var(--whiteColor);
+    padding: 11px 31px 11px 15px;
+    transition: var(--transition);
+    background-color: var(--heraBlueColor);
+
+    i {
+        transform: translateY(-50%);
+        position: absolute;
+        margin-top: 2px;
+        line-height: 1;
+        right: 15px;
+        top: 50%;
+    }
+
+    &:hover {
+        background-color: var(--aareRiverColor);
+        color: var(--whiteColor);
+    }
+}

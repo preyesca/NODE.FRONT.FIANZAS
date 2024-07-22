@@ -1,0 +1,1030 @@
+// Keyframes CSS
+@keyframes ripple {
+
+    0%,
+    35% {
+        transform: scale(0);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.5);
+        opacity: 0.8;
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(4);
+    }
+}
+
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    body {
+        font-size: 14px;
+    }
+
+    p {
+        font-size: 14px;
+    }
+
+    input {
+        font-size: 14px;
+    }
+
+    .h1,
+    h1 {
+        font-size: 36px;
+    }
+
+    .h2,
+    h2 {
+        font-size: 28px;
+    }
+
+    .h3,
+    h3 {
+        font-size: 24px;
+    }
+
+    .h4,
+    h4 {
+        font-size: 20px;
+    }
+
+    .h5,
+    h5 {
+        font-size: 16px;
+    }
+
+    .h6,
+    h6 {
+        font-size: 12px;
+    }
+
+    button {
+        font-size: 14px !important;
+    }
+
+    // Default BTN
+    .default-btn {
+        font-size: 13px;
+        padding: 11px 31px 11px 15px;
+
+        i {
+            margin-top: 2px;
+            right: 15px;
+        }
+    }
+
+    // Menu Dropdown CSS
+    .menu-dropdown {
+        &.mat-mdc-menu-panel {
+            &.mat-mdc-menu-panel {
+                border-radius: 5px 5px 0 0;
+                width: 250px;
+
+                .menu-header {
+                    border-radius: 5px 5px 0 0;
+                    padding: 12px;
+
+                    h5 {
+                        font-size: 15px;
+                    }
+
+                    button {
+                        font-size: 13px;
+                    }
+                }
+
+                .menu-body {
+                    li {
+                        padding: 10px 28px 10px 12px;
+
+                        img {
+                            width: 45px;
+                        }
+
+                        .title {
+                            margin-left: 12px;
+
+                            h6 {
+                                font-size: 13.5px;
+                            }
+
+                            span {
+                                font-size: 12px;
+                                padding-left: 16px;
+
+                                i {
+                                    margin-top: 1px;
+                                }
+                            }
+                        }
+
+                        .close-btn {
+                            right: 10px;
+                        }
+
+                        .icon {
+                            font-size: 25px;
+                        }
+                    }
+
+                    .dropdown-item {
+                        padding: {
+                            top: 5px;
+                            bottom: 5px;
+                        }
+
+                        ;
+
+                        span {
+                            margin-top: 3px;
+                            font-size: 13px;
+                        }
+                    }
+
+                    .d-flex {
+                        &.flex-wrap {
+                            padding: 5px;
+                        }
+                    }
+                }
+
+                .menu-footer {
+                    padding: {
+                        top: 11px;
+                        bottom: 12px;
+                    }
+
+                    ;
+
+                    a {
+                        font-size: 13px;
+                        padding-right: 15px;
+                    }
+                }
+            }
+        }
+    }
+
+    .profile-menu-dropdown {
+        &.mat-mdc-menu-panel {
+            &.mat-mdc-menu-panel {
+                width: 120px;
+
+                ul {
+                    li {
+                        a {
+                            font-size: 14px;
+                            padding: 6px 10px 6px 31px;
+
+                            i {
+                                left: 10px;
+                            }
+                        }
+                    }
+                }
+
+                .mat-mdc-menu-content {
+                    padding: 5px 0;
+                }
+            }
+        }
+    }
+
+    .language-menu-dropdown {
+        &.mat-mdc-menu-panel {
+            &.mat-mdc-menu-panel {
+                width: 130px;
+
+                ul {
+                    li {
+                        button {
+                            padding: 8px 15px 8px 40px;
+                            font-size: 14px;
+
+                            img {
+                                width: 18px;
+                                left: 15px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .monthMenu {
+        &.mat-mdc-menu-panel {
+            &.mat-mdc-menu-panel {
+                width: 135px;
+
+                .mat-mdc-menu-content {
+                    button {
+                        padding: 5px 15px;
+                        font-size: 14px;
+                    }
+                }
+
+                &.dotMenu {
+                    .mat-mdc-menu-content {
+                        button {
+                            padding-left: 35px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Mat Card CSS
+    .mat-mdc-card {
+        &.teggium-card {
+            padding: 15px;
+
+            .mat-mdc-card-header {
+                margin-bottom: 15px;
+
+                .btn {
+                    font-size: 14px !important;
+
+                    &::before {
+                        font-size: 12px;
+                        margin-top: -1px;
+                    }
+                }
+
+                .dot-btn {
+                    top: 1px;
+                    font-size: 22px !important;
+                }
+
+                &.border-bottom {
+                    padding-bottom: 15px;
+                    border-bottom: 1px solid #eef0f7;
+                }
+
+                .default-btn {
+                    padding: 12px 18px 12px 35px !important;
+
+                    font: {
+                        size: 13px !important;
+                    }
+
+                    ;
+
+                    i {
+                        left: 15px;
+                        font-size: 15px;
+                    }
+                }
+            }
+
+            .mat-mdc-card-content {
+                .teggium-mat-table {
+                    -webkit-overflow-scrolling: touch;
+
+                    overflow: {
+                        x: auto;
+                        y: hidden;
+                    }
+
+                    ;
+
+                    .mat-mdc-table {
+                        .mdc-data-table__header-row {
+                            .mdc-data-table__header-cell {
+                                padding: 12px 15px;
+                                white-space: nowrap;
+
+                                &::after {
+                                    height: 15px;
+                                }
+                            }
+                        }
+
+                        .mdc-data-table__content {
+                            .mdc-data-table__row {
+                                .mdc-data-table__cell {
+                                    font-size: 13.5px;
+                                    padding: 12px 15px;
+                                    white-space: nowrap;
+
+                                    .product-info {
+                                        margin-right: 0;
+                                        padding-right: 35px;
+
+                                        img {
+                                            width: 40px;
+                                            margin-right: 10px;
+                                            border-radius: 5px;
+                                        }
+                                    }
+
+                                    .badge {
+                                        font-size: 13px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .mat-mdc-paginator-outer-container {
+                        margin-top: 5px;
+
+                        .mat-mdc-paginator-container {
+                            .mat-mdc-icon-button {
+                                &.mat-mdc-button-base {
+                                    width: 38px;
+                                    height: 38px;
+                                    padding: 5px;
+                                }
+                            }
+                        }
+                    }
+
+                    &.teamMembersListTable {
+                        .mat-mdc-table {
+                            .mdc-data-table__header-row {
+                                .mdc-data-table__header-cell {
+                                    padding: {
+                                        left: 15px;
+                                        right: 15px;
+                                    }
+
+                                    ;
+                                }
+                            }
+
+                            .mdc-data-table__content {
+                                .mdc-data-table__row {
+                                    .mdc-data-table__cell {
+                                        padding: {
+                                            left: 15px;
+                                            right: 15px;
+                                        }
+
+                                        ;
+
+                                        .role-info {
+                                            padding-left: 27px;
+
+                                            i,
+                                            img {
+                                                font-size: 15px;
+                                            }
+                                        }
+
+                                        .user-info {
+                                            padding-right: 35px;
+                                            margin-right: 0;
+                                            font-size: 14px;
+
+                                            img {
+                                                width: 42px;
+                                                margin-right: 12px;
+                                            }
+
+                                            span {
+                                                font-size: 14px;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    &.myTasksTable {
+                        .mdc-data-table__content {
+                            .mdc-data-table__row {
+                                .mdc-data-table__cell {
+                                    padding: 12px 15px;
+
+                                    .badge {
+                                        padding: 4px 18px 5px;
+                                    }
+
+                                    .name-info {
+                                        font-size: 14px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    &.invoiceListsTable {
+                        .mat-mdc-table {
+                            .mdc-data-table__content {
+                                .mdc-data-table__row {
+                                    .mdc-data-table__cell {
+                                        .user-info {
+                                            padding-right: 40px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .product-tabs {
+                    &.mat-mdc-tab-group {
+                        margin-top: 20px;
+
+                        .mat-mdc-tab-header {
+                            margin-bottom: 15px;
+
+                            .mat-mdc-tab-label-container {
+                                .mat-mdc-tab-list {
+                                    .mat-mdc-tab-labels {
+                                        .mat-mdc-tab {
+                                            font-size: 15px;
+                                            padding: 12px 20px;
+                                            margin-right: 10px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .note-box {
+                    .mat-mdc-text-field-wrapper {
+                        padding: 0 15px 0 45px;
+                    }
+
+                    i {
+                        top: 16px;
+                        left: -30px;
+                        font-size: 23px;
+                    }
+
+                    .default-btn {
+                        font-size: 15px !important;
+                        padding: 15px 35px !important;
+                    }
+                }
+            }
+
+            &.enrolled-created-box {
+                .mat-mdc-tab-group {
+                    .mat-mdc-tab-header {
+                        .mat-mdc-tab-label-container {
+                            .mat-mdc-tab-list {
+                                .mat-mdc-tab-labels {
+                                    .mat-mdc-tab {
+                                        font-size: 15px;
+                                        padding: 12px 20px;
+                                        margin-right: 10px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .mat-mdc-tab-body-wrapper {
+                        .mat-mdc-tab-body {
+                            .mat-mdc-tab-body-content {
+                                .mat-elevation-z8 {
+                                    .mat-mdc-table {
+                                        .mdc-data-table__content {
+                                            .mdc-data-table__row {
+                                                .mdc-data-table__cell {
+                                                    .course-info {
+                                                        margin-right: 0;
+                                                        display: block !important;
+
+                                                        font: {
+                                                            size: 14px;
+                                                        }
+
+                                                        ;
+
+                                                        img {
+                                                            display: block;
+
+                                                            margin: {
+                                                                right: 0;
+                                                                bottom: 12px;
+                                                            }
+
+                                                            ;
+                                                        }
+
+                                                        a {
+                                                            max-width: 100%;
+                                                            white-space: nowrap;
+                                                        }
+                                                    }
+
+                                                    .badge {
+                                                        padding: 4px 15px 5px;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .course-details-desc {
+                .mat-accordion {
+                    .mat-expansion-panel-header {
+                        padding: 15px;
+                        font-size: 14px;
+                    }
+
+                    .mat-expansion-indicator {
+                        right: 15px;
+                        top: 12px;
+
+                        &::after {
+                            padding: 3px;
+                        }
+                    }
+
+                    .mat-expansion-panel-body {
+                        padding: 5px 15px 15px;
+
+                        .content-list {
+
+                            li {
+                                i {
+                                    font-size: 15px;
+                                }
+
+                                span {
+                                    &:nth-child(1) {
+                                        padding-left: 19px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .mat-expansion-panel {
+                        &:last-child {
+                            margin-bottom: 15px;
+                        }
+                    }
+                }
+            }
+
+            &.create-project-card {
+                form {
+                    .mat-mdc-text-field-wrapper {
+                        padding: 0 15px 0 45px;
+                    }
+
+                    i {
+                        top: 16px;
+                        left: -30px;
+                        font-size: 23px;
+                    }
+                }
+
+                .default-btn {
+                    font-size: 15px !important;
+                    padding: 15px 35px !important;
+                }
+            }
+        }
+    }
+
+    
+    // Breadcrumb CSS
+    .breadcrumb-card {
+        .breadcrumb {
+            margin-top: 12px;
+        }
+    }
+
+
+}
+
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {}
+
+
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {
+
+    body {
+        font-size: 14px;
+    }
+
+    p {
+        font-size: 14px;
+    }
+
+    input {
+        font-size: 14px;
+    }
+
+    button {
+        font-size: 14px !important;
+    }
+
+    // Menu Dropdown CSS
+    .menu-dropdown {
+        &.mat-mdc-menu-panel {
+            &.mat-mdc-menu-panel {
+                .menu-header {
+                    h5 {
+                        font-size: 16px;
+                    }
+
+                    button {
+                        font-size: 13px;
+                    }
+                }
+
+                .menu-body {
+                    li {
+                        .title {
+                            margin-left: 12px;
+
+                            h6 {
+                                font-size: 14px;
+                            }
+
+                            span {
+                                i {
+                                    margin-top: 1px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .profile-menu-dropdown {
+        &.mat-mdc-menu-panel {
+            &.mat-mdc-menu-panel {
+                ul {
+                    li {
+                        a {
+                            font-size: 14px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .language-menu-dropdown {
+        &.mat-mdc-menu-panel {
+            &.mat-mdc-menu-panel {
+                ul {
+                    li {
+                        button {
+                            font-size: 14px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Mat Card CSS
+    .mat-mdc-card {
+        &.teggium-card {
+            padding: 20px;
+
+            .mat-mdc-card-header {
+                margin-bottom: 20px;
+
+                .btn {
+                    font-size: 14px !important;
+
+                    &::before {
+                        font: {
+                            size: 14px;
+                        }
+
+                        ;
+                    }
+                }
+
+                &.border-bottom {
+                    padding-bottom: 15px;
+                }
+            }
+
+            .mat-mdc-card-content {
+                .teggium-mat-table {
+                    -webkit-overflow-scrolling: touch;
+
+                    overflow: {
+                        x: auto;
+                        y: hidden;
+                    }
+
+                    ;
+
+                    .mat-mdc-table {
+                        .mdc-data-table__header-row {
+                            .mdc-data-table__header-cell {
+                                padding: 15px 20px;
+                                white-space: nowrap;
+
+                                &::after {
+                                    height: 15px;
+                                }
+                            }
+                        }
+
+                        .mdc-data-table__content {
+                            .mdc-data-table__row {
+                                .mdc-data-table__cell {
+                                    padding: 15px 20px;
+                                    white-space: nowrap;
+
+                                    .product-info {
+                                        margin-right: 0;
+                                        padding-right: 35px;
+
+                                        img {
+                                            width: 45px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    &.teamMembersListTable {
+                        .mat-mdc-table {
+                            .mdc-data-table__header-row {
+                                .mdc-data-table__header-cell {
+                                    padding: {
+                                        left: 20px;
+                                        right: 20px;
+                                    }
+
+                                    ;
+                                }
+                            }
+
+                            .mdc-data-table__content {
+                                .mdc-data-table__row {
+                                    .mdc-data-table__cell {
+                                        padding: {
+                                            left: 20px;
+                                            right: 20px;
+                                        }
+
+                                        ;
+
+                                        .user-info {
+                                            padding-right: 35px;
+                                            margin-right: 0;
+                                            font-size: 15px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    &.invoiceListsTable {
+                        .mat-mdc-table {
+                            .mdc-data-table__content {
+                                .mdc-data-table__row {
+                                    .mdc-data-table__cell {
+                                        .user-info {
+                                            padding-right: 40px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            &.enrolled-created-box {
+                .mat-mdc-tab-group {
+                    .mat-mdc-tab-header {
+                        .mat-mdc-tab-label-container {
+                            .mat-mdc-tab-list {
+                                .mat-mdc-tab-labels {
+                                    .mat-mdc-tab {
+                                        padding: 14px 25px;
+                                        font-size: 16px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .mat-mdc-tab-body-wrapper {
+                        .mat-mdc-tab-body {
+                            .mat-mdc-tab-body-content {
+                                .mat-elevation-z8 {
+                                    .mat-mdc-table {
+                                        .mdc-data-table__content {
+                                            .mdc-data-table__row {
+                                                .mdc-data-table__cell {
+                                                    .course-info {
+                                                        margin-right: 0;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+}
+
+
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {
+
+    // Mat Card CSS
+    .mat-mdc-card {
+        &.teggium-card {
+            .mat-mdc-card-content {
+                .teggium-mat-table {
+                    -webkit-overflow-scrolling: touch;
+
+                    overflow: {
+                        x: auto;
+                        y: hidden;
+                    }
+
+                    ;
+
+                    .mat-mdc-table {
+                        .mdc-data-table__header-row {
+                            .mdc-data-table__header-cell {
+                                white-space: nowrap;
+                            }
+                        }
+
+                        .mdc-data-table__content {
+                            .mdc-data-table__row {
+                                .mdc-data-table__cell {
+                                    white-space: nowrap;
+
+                                    .product-info {
+                                        padding-right: 25px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
+
+    // Mat Card CSS
+    .mat-mdc-card {
+        &.teggium-card {
+            .mat-mdc-card-content {
+                .teggium-mat-table {
+                    -webkit-overflow-scrolling: touch;
+
+                    overflow: {
+                        x: auto;
+                        y: hidden;
+                    }
+
+                    ;
+
+                    .mat-mdc-table {
+                        .mdc-data-table__header-row {
+                            .mdc-data-table__header-cell {
+                                white-space: nowrap;
+                            }
+                        }
+
+                        .mdc-data-table__content {
+                            .mdc-data-table__row {
+                                .mdc-data-table__cell {
+                                    white-space: nowrap;
+
+                                    .product-info {
+                                        padding-right: 25px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    
+
+}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {
+
+    // Default BTN
+    .default-btn {
+        font-size: 14px;
+        padding: 11px 42px 11px 22px;
+
+        i {
+            right: 22px;
+            margin-top: 1px;
+        }
+    }
+
+    // Mat Card CSS
+    .mat-mdc-card {
+        &.teggium-card {
+            .mat-mdc-card-content {
+                .teggium-mat-table {
+                    .mat-mdc-table {
+                        .mdc-data-table__content {
+                            .mdc-data-table__row {
+                                .mdc-data-table__cell {
+                                    .product-info {
+                                        margin-right: -80px;
+                                        padding-right: 0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    &.teamMembersListTable {
+                        overflow: {
+                            x: hidden;
+                            y: hidden;
+                        }
+
+                        ;
+
+                        .mat-mdc-table {
+                            .mdc-data-table__content {
+                                .mdc-data-table__row {
+                                    .mdc-data-table__cell {
+                                        .user-info {
+                                            margin-right: -80px;
+                                            padding-right: 0;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    &.myTasksTable {
+                        overflow: {
+                            x: hidden;
+                            y: hidden;
+                        }
+
+                        ;
+
+                        .mdc-data-table__content {
+                            .mdc-data-table__row {
+                                .mdc-data-table__cell {
+                                    padding: 15px 20px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    
+
+}

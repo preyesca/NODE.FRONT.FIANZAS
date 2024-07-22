@@ -1,0 +1,210 @@
+<app-share-breadcrumb [breadcrumbs]="breadcrumbs"></app-share-breadcrumb>
+<mat-card class="mb-25 teggium-card">
+  <mat-card-header>
+    <h5 class="teggium-titulo">Configuración de firma cotejo</h5>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form [formGroup]="frmConfiguracion" (ngSubmit)="click_add()">
+      <div class="row">
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>País</mat-label>
+            <mat-select
+              formControlName="pais"
+              (selectionChange)="change_pais($event.value)"
+              [disabled]="this.lstFirmaCotejo.ejecutivos.length > 0"
+            >
+              <mat-select-trigger>
+                <div class="custom-select-country-select">
+                  <img
+                    *ngIf="currentCountry?.icon"
+                    class="custom-select-country-select-img"
+                    src="assets/images/catalogs/countries/{{
+                      currentCountry?.icon
+                    }}"
+                    alt=""
+                  />
+                  <span>{{ currentCountry?.descripcion }}</span>
+                </div>
+              </mat-select-trigger>
+              <mat-option *ngFor="let pais of paises" [value]="pais.clave">
+                <div class="custom-select-country-option">
+                  <img
+                    *ngIf="pais.icon"
+                    class="custom-select-country-option-img"
+                    src="assets/images/catalogs/countries/{{ pais.icon }}"
+                    alt=""
+                  /><span>{{ pais.descripcion }}</span>
+                </div>
+              </mat-option>
+            </mat-select>
+            <mat-icon matPrefix
+              ><span class="material-symbols-outlined">flag</span></mat-icon
+            >
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Proyecto</mat-label>
+            <mat-select
+              formControlName="proyecto"
+              [disabled]="this.lstFirmaCotejo.ejecutivos.length > 0"
+            >
+              <mat-option
+                *ngFor="let proyecto of proyectosByPais"
+                [value]="proyecto._id"
+              >
+                {{ proyecto.codigo }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matPrefix
+              ><span class="material-symbols-outlined"
+                >devices_fold</span
+              ></mat-icon
+            >
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="!show_consulta()">
+        <div class="col">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Clave</mat-label>
+            <input
+              matInput
+              type="number"
+              formControlName="clave"
+              maxlength="15"
+              autocomplete="off"
+              onlyNumber
+            />
+            <mat-icon matPrefix
+              ><span class="material-symbols-outlined">tag</span></mat-icon
+            >
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Nombre</mat-label>
+            <input
+              matInput
+              formControlName="nombre"
+              maxlength="100"
+              autocomplete="off"
+            />
+            <mat-icon matPrefix
+              ><span class="material-symbols-outlined">person</span></mat-icon
+            >
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field
+            appearance="outline"
+            class="w-100 cursor-pointer"
+            (click)="fileUpload.click()"
+          >
+            <mat-label class="cursor-pointer">Firma</mat-label>
+            <input
+              matInput
+              formControlName="firma"
+              readonly
+              class="cursor-pointer"
+            />
+            <input
+              #fileUpload
+              accept=".png,.jpg,jpeg"
+              type="file"
+              [multiple]="false"
+              class="d-none"
+              [readOnly]="true"
+              (change)="change_file(fileUpload.files)"
+            />
+            <mat-icon matPrefix
+              ><span class="material-symbols-outlined"
+                >attach_file</span
+              ></mat-icon
+            >
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row mt-2" *ngIf="!show_consulta()">
+        <div class="col-md-12 text-end">
+          <button type="submit" class="btn btn-primary">Agregar</button>
+        </div>
+      </div>
+
+      <div class="row mt-2">
+        <div class="col-md-12">
+          <mat-table mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="clave">
+              <mat-header-cell *matHeaderCellDef>Clave</mat-header-cell>
+              <mat-cell *matCellDef="let row" class="border-normal">{{
+                row.clave
+              }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="nombre">
+              <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+              <mat-cell *matCellDef="let row">{{ row.nombre }}</mat-cell>
+            </ng-container>
+
+            <!-- Action Column -->
+            <ng-container matColumnDef="action">
+              <mat-header-cell *matHeaderCellDef class="col-action"
+                >Acciones</mat-header-cell
+              >
+              <mat-cell *matCellDef="let row" class="text-end">
+                <mat-icon class="cursor-pointer" (click)="click_ver(row)"
+                  >visibility</mat-icon
+                >
+                <mat-icon
+                  class="cursor-pointer"
+                  (click)="click_eliminar(row)"
+                  *ngIf="!show_consulta()"
+                  >delete</mat-icon
+                >
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row
+              *matHeaderRowDef="displayedColumns"
+              class="table-header"
+            ></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+            <tr class="row-empty" *matNoDataRow>
+              <td class="mat-cell" colspan="4">
+                No hay información para mostrar.
+              </td>
+            </tr>
+          </mat-table>
+        </div>
+      </div>
+
+      <div class="row mt-2">
+        <div class="col-md-12 text-end">
+          <button
+            type="button"
+            class="btn btn-danger mx-1"
+            [routerLink]="'/administracion/configurador-firma-contejo'"
+          >
+            Cancelar
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="click_guardar()"
+            *ngIf="this.operation == 0"
+          >
+            Guardar
+          </button>
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

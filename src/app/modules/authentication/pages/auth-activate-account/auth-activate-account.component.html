@@ -1,0 +1,49 @@
+<div class="wrapper-login">
+  <img src="assets/images/logos/logo-teggium-dark.svg" class="logo" alt="logo" />
+  <div class="form-holder">
+    <form class="form" autocomplete="off" [formGroup]="frmActivateAccount" (submit)="changeNewPassword()">
+      <div class="row mb-3">
+        <div class="text-center">
+          <h3>Hola <b>{{ nombreUsuario }}</b></h3>
+        </div>
+      </div>
+      <div class="form-group">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Nueva contraseña</mat-label>
+          <input matInput formControlName="newPassword" maxlength="20"  [type]="hide ? 'password' : 'text'"/>
+          <mat-icon matPrefix>lock</mat-icon>
+          <button type="button" class="password-icon" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-pressed]="hide">
+            <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-error *ngIf="!!frmActivateAccount.controls['newPassword'].hasError('pattern')">
+          Error en la contraseña debe tener mínimo:
+          <br>
+          <ul>
+            <li>8 caracteres</li>
+            <li>1 mayúscula</li>
+            <li>1 minúscula</li>
+            <li>1 caracter especial (! @ # $ *)</li>
+            <li>1 número</li>
+          </ul>
+        </mat-error>
+      </div>
+      <div class="form-group">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Confirmar nueva contraseña</mat-label>
+          <input matInput formControlName="newPasswordConfirm" maxlength="20" [type]="hideRepeat ? 'password' : 'text'" />
+          <mat-icon matPrefix>lock</mat-icon>
+          <button type="button" class="password-icon" mat-icon-button matSuffix (click)="hideRepeat = !hideRepeat" [attr.aria-pressed]="hideRepeat">
+            <mat-icon>{{ hideRepeat ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-error *ngIf="checkField('newPasswordConfirm', 'passwordnoequal')">
+          Las contraseñas deben coincidir.
+        </mat-error>
+      </div>
+      <div class="form-group-button">
+        <button>Actualizar contraseña</button>
+      </div>
+    </form>
+  </div>
+</div>

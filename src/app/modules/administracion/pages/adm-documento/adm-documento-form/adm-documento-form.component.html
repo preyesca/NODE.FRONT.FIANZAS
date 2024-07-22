@@ -1,0 +1,101 @@
+<app-share-breadcrumb [breadcrumbs]="breadcrumbs"></app-share-breadcrumb>
+
+<mat-card class="mb-25 teggium-card">
+
+    <mat-card-header>
+        <h5 class="teggium-titulo">{{title}}</h5>
+    </mat-card-header>
+
+    <mat-card-content>
+        <form autocomplete="off" [formGroup]="formDocumentos" (submit)="onSubmit.emit(formDocumentos.value)">
+
+            <div class="row">
+                <div class="col-md-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>País</mat-label>
+                        <mat-select formControlName="pais">
+                            <mat-select-trigger>
+                                <div class="custom-select-country-select">
+                                    <img *ngIf="currentCountry?.icon" class="custom-select-country-select-img"
+                                        src="assets/images/catalogs/countries/{{currentCountry?.icon}}" alt="" />
+                                    <span>{{ currentCountry?.descripcion }}</span>
+                                </div>
+                            </mat-select-trigger>
+                            <mat-option *ngFor="let pais of catalogos?.paises" [value]="pais.clave">
+                                <img *ngIf="pais.icon" src="assets/images/catalogs/countries/{{pais.icon}}"
+                                    alt="icon_flag"><span> {{pais.descripcion}}</span>
+                            </mat-option>
+                        </mat-select>
+                        <mat-icon matPrefix>
+                            <span class="material-symbols-outlined">flag</span>
+                        </mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Categoría</mat-label>
+                        <mat-select formControlName="categoria" (selectionChange)="changeCategoria()">
+                            <mat-option *ngFor="let categoria of catalogos?.categoriaDocumento"
+                                [value]="categoria.clave">
+                                {{categoria.descripcion}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-icon matPrefix><span class="material-symbols-outlined">lan</span></mat-icon>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Estatus</mat-label>
+                        <mat-select formControlName="estatus">
+                            <mat-option *ngFor="let estatus of catalogos?.estatus" [value]="estatus.clave">
+                                {{estatus.descripcion}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-icon matPrefix><span class="material-symbols-outlined">toggle_off</span></mat-icon>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4" *ngIf="this.formDocumentos.controls['categoria'].value==4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Clave</mat-label>
+                        <input formControlName="clave" matInput>
+                        <mat-icon matPrefix><span class="material-symbols-outlined">dataset_linked</span></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div id="div_nombre">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Nombre</mat-label>
+                        <input placeholder="Documento" formControlName="nombre" matInput>
+                        <mat-icon matPrefix><span class="material-symbols-outlined">description</span></mat-icon>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row" *ngIf="this.formDocumentos.controls['categoria'].value==4">
+                <div class=" col-md-12">
+                    <div class="alert alert-danger" role="alert">
+                        La clave de los documentos son identificadores únicos que se utilizan para el funcionamiento
+                        correcto del sistema, en caso de requerir alguna modificación deberá planificarse con el área de
+                        sistemas.
+                        <br>
+                        <a
+                            href="https://docs.google.com/spreadsheets/d/17rVzwjjoIaEwhfrYylbAJbn1GKaHkA0fbcFy4NBGLK8/edit?usp=sharing" target="_blank">
+                            Documentos actuales
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row text-end">
+                <div class="col-12">
+                    <button type="button" class="btn btn-danger mx-1" (click)="clickCancel.emit(true)">{{ver ?
+                        "Regresar":"Cancelar"}}</button>
+                    <button type="submit" (click)="validateForm()" class="btn btn-primary"
+                        *ngIf="!this.ver">{{titleButton}}</button>
+                </div>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

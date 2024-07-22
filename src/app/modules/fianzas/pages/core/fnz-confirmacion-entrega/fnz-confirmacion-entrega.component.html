@@ -1,0 +1,63 @@
+<app-share-breadcrumb [breadcrumbs]="breadcrumbs"></app-share-breadcrumb>
+
+<mat-card class="mb-25 teggium-card" *ngIf="!loading">
+    <mat-card-header>
+        <div class="teggium-titulo-encabezado">
+            <h5 class="teggium-titulo">Confirmación de entrega<span *ngIf="readonlyModule" class="title-readonlyModule">Modo consulta</span></h5>
+            <app-fnz-encabezado [folio]="folio.folio"></app-fnz-encabezado>
+            <app-fnz-flujo-consulta *ngIf="readonlyModule" 
+            [flujoConsulta]="folio.flujoConsulta">
+        </app-fnz-flujo-consulta>
+        </div>
+    </mat-card-header>
+    <mat-card-content>
+        <form [formGroup]="frmConfirmacionEntrega" (submit)="ConfirmacionEntregaSubmit()" autocomplete="false">
+            <div class="row">
+                <div class="col-md-12">
+                    <mat-slide-toggle color="primary" formControlName="entregado">
+                        Entregado
+                    </mat-slide-toggle>
+                </div>
+            </div>
+
+            <div class="row mt-3" *ngIf="!readonlyModule">
+                <div class="col-md-10">
+                    <div class="custom-input-file col-7" style="margin-top: 25px; margin-bottom: 35px;"
+                        (click)="fileInputMultiple.value">
+                        <input #fileInputMultiple type="file" id="fichero-tarifas" class="input-file"
+                            (change)="cargarMultiple(fileInputMultiple.files)" single>
+                        <img src="assets/images/icons/folder-open-1.svg" width="50px">
+                        <h5>Seleccione un archivo</h5>
+                        <h6>{{fileName}}</h6>
+                    </div>
+                </div>
+                <div class="col-md-2 text-rigth align-self-end">
+                    <button class="btn btn-primary" type="button" (click)="subirCarga()">
+                        Cargar
+                    </button>
+                </div>
+            </div>
+
+            <div *ngIf="isUploading">
+                <span>Espere un momento por favor...</span>
+                <mat-progress-bar mode="indeterminate"> {{uploadProgress}}%</mat-progress-bar>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-sm">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Comentarios</mat-label>
+                        <textarea matInput maxlength="500" formControlName="comentarios" spellcheck="true"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row mt-3 text-end">
+                <div class="col-sm">
+                    <button type="button" class="btn btn-danger mx-1" (click)="return()">Cancelar</button>
+                    <button *ngIf="!readonlyModule" type="submit" class="btn btn-primary">Continuar</button>
+                </div>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

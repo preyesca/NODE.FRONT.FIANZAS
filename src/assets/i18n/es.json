@@ -1,0 +1,129 @@
+{
+  "administracion": {
+    "aseguradora": {},
+    "configuracion-aseguradora": {
+      "form": {
+        "aseguradora": "Aseguradora",
+        "correo": "Correo electrónico",
+        "pais": "País",
+        "proyecto": "Proyecto",
+        "titles": {
+          "create": "Nueva configuración aseguradora",
+          "edit": "Editar configuración aseguradora",
+          "view": "Ver configuración aseguradora"
+        }
+      },
+      "table": {
+        "aseguradora": "Aseguradora",
+        "pais": "País",
+        "proyecto": "Proyecto"
+      },
+      "titlePlural": "Configuración de aseguradoras",
+      "titleSingular": "Configuración aseguradora"
+    },
+    "configuracion-documental": {},
+    "documento": {},
+    "proyecto": {},
+    "title": "Administración",
+    "usuario": {
+      "form": {
+        "correoElectronico": "Correo electrónico",
+        "estado": "Estado",
+        "nombre": "Nombre",
+        "pais": "País",
+        "primerApellido": "Primer Apellido",
+        "proyecto": "Proyecto",
+        "rol": "Rol",
+        "segundoApellido": "Segundo Apellido",
+        "titles": {
+          "create": "Nuevo usuario",
+          "edit": "Editar usuario",
+          "view": "Ver usuario"
+        }
+      },
+      "table": {
+        "correoElectronico": "Correo electrónico",
+        "estatus": "Estado",
+        "nombre": "Nombre",
+        "pais": "País",
+        "rol": "Rol",
+        "sesionAbierta": "Sesión abierta"
+      },
+      "titlePlural": "Usuarios",
+      "titleSingular": "Usuario",
+      "perfil": "Perfil"
+    },
+    "reporte": {
+      "form": {
+        "seleccionReporte": "Selecciona tu reporte",
+        "fechaInicio": "Fecha inicio",
+        "fechaFin": "Fecha fin",
+        "destinatarios": "Destinatarios"
+      },
+      "titlePlural": "Reportes",
+      "titleSingular": "Reporte",
+      "messageEmailInvalid": "Escriba un correo electrónico valido",
+      "messageEmailDuplicate": "El correo electrónico ya esta registrado",
+      "successMessage": "El reporte será enviado a los destinatarios ingresados.",
+      "mensajeAgregarCorreo": "Para agregar más de un correo electrónico escriba uno válido y presione"
+    }
+  },
+  "general": {
+    "options": {
+      "actions": "Acciones",
+      "cancel": "Cancelar",
+      "create": "Nuevo",
+      "delete": "Eliminar",
+      "edit": "Editar",
+      "new": "Nuevo",
+      "return": "Regresar",
+      "save": "Guardar",
+      "search": "Buscar...",
+      "update": "Actualizar",
+      "upload": "Cargar",
+      "uploading": "Cargando",
+      "view": "Ver",
+      "logout": "Cerrar sesión",
+      "download": "Descargar"
+    },
+    "table": {
+      "emptyResults": "No hay información para mostrar.",
+      "firstPage": "Primer página",
+      "lastPage": "Última página",
+      "nextPage": "Siguiente",
+      "pageOf": "de",
+      "previousPage": "Anterior",
+      "recordsPerPage": "Registros por página"
+    }
+  },
+  "kyc": {
+    "administracion": {},
+    "core": {
+      "folio": {
+        "nuevo": {
+          "placeholderFile": "Seleccione un archivo",
+          "requiredFile": "Necesita seleccionar un archivo de Excel válido.",
+          "title": "Nuevo folio",
+          "uploadSuccessful": "Carga exitosa"
+        },
+        "title": "Folio"
+      }
+    },
+    "title": "Conoce a tu cliente"
+  },
+  "fianzas": {
+    "administracion": {},
+    "core": {
+      "folio": {
+        "nuevo": {
+          "placeholderFile": "Seleccione un archivo",
+          "requiredFile": "Necesita seleccionar un archivo de Excel válido.",
+          "title": "Nuevo folio",
+          "uploadSuccessful": "Carga exitosa"
+        },
+        "title": "Folio"
+      }
+    },
+    "title": "Fianzas"
+  }
+}

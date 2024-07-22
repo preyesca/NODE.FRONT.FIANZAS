@@ -1,0 +1,101 @@
+<app-share-breadcrumb [breadcrumbs]="breadcrumbs"></app-share-breadcrumb>
+
+<mat-card class="mb-25 teggium-card">
+
+    <mat-card-header>
+        <h5 class="teggium-titulo">{{title}}</h5>
+    </mat-card-header>
+    <mat-card-content>
+
+        <form autocomplete="off" [formGroup]="formAseguradora" (submit)="onSubmit.emit(formAseguradora.value)">
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Nombre comercial </mat-label>
+                        <input formControlName="nombreComercial" matInput>
+                        <mat-icon matPrefix>
+                            <span class="material-symbols-outlined">cases</span>
+                        </mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Razon social </mat-label>
+                        <input formControlName="razonSocial" matInput>
+                        <mat-icon matPrefix>
+                            <span class="material-symbols-outlined">account_balance</span>
+                        </mat-icon>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Pais </mat-label>
+                        <mat-select (selectionChange)="onPaisSelectionChange($event.value)" formControlName="pais">
+                            <mat-select-trigger>
+                                <div class="custom-select-country-select">
+                                  <img
+                                    *ngIf="currentCountry?.icon"
+                                    class="custom-select-country-select-img"
+                                    src="assets/images/catalogs/countries/{{currentCountry?.icon}}"
+                                    alt=""
+                                  />
+                                  <span>{{ currentCountry?.descripcion }}</span>
+                                </div>
+                              </mat-select-trigger>
+                            <mat-option *ngFor="let pais of catalogos?.paises" [value]="pais.clave">
+                                <img *ngIf="pais.icon" src="assets/images/catalogs/countries/{{pais.icon}}"
+                                    alt="icon_flag"><span> {{pais.descripcion}}</span>
+                            </mat-option>
+                        </mat-select>
+                        <mat-icon matPrefix>
+                            <span class="material-symbols-outlined">flag</span>
+                        </mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Estado</mat-label>
+                        <mat-select formControlName="estatus">
+                            <mat-option *ngFor="let estatus of catalogos?.estatus" [value]="estatus.clave">
+                                {{estatus.descripcion}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-icon matPrefix>
+                            <span class="material-symbols-outlined">toggle_off</span>
+                        </mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Oficina ({{ oficinasByPais.length }})</mat-label>
+                      <mat-select multiple formControlName="oficinas">
+                          <mat-option *ngFor="let oficina of oficinasByPais" [value]="oficina.clave">
+                              {{oficina.descripcion}}
+                          </mat-option>
+                      </mat-select>
+                      <mat-icon matPrefix>
+                          <span class="material-symbols-outlined">apartment</span>
+                      </mat-icon>
+                  </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm">
+                    <div class="insurers-modal-checkbox-container">
+                        <mat-checkbox color="primary" formControlName="altaProyecto">Alta proyectos</mat-checkbox>
+                        <mat-checkbox color="primary" formControlName="documentos">Documentos</mat-checkbox>
+                    </div>
+                </div>
+            </div>
+            <div class="row text-end">
+                <div class="col-12">
+                    <button type="button" class="btn btn-danger mx-1" (click)="clickCancel.emit(true)">{{ver ? "Regresar":"Cancelar"}}</button>
+                    <button type="submit" *ngIf="!this.ver"  (click)="validateForm()" class="btn btn-primary">{{titleButton}}</button>
+                </div>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

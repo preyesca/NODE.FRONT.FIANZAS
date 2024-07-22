@@ -1,0 +1,121 @@
+<app-share-breadcrumb [breadcrumbs]="breadcrumbs"></app-share-breadcrumb>
+
+<mat-card class="mb-25 teggium-card">
+  <mat-card-header>
+    <h5 class="teggium-titulo">{{title}} configuración documental</h5>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="frmConfiguracionDocumental" (ngSubmit)="submit()">
+      <div class="row">
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>País</mat-label>
+            <mat-select formControlName="pais">
+              <mat-select-trigger>
+                <div class="custom-select-country-select">
+                  <img *ngIf="currentCountry?.icon" class="custom-select-country-select-img"
+                    src="assets/images/catalogs/countries/{{currentCountry?.icon}}" alt="" />
+                  <span>{{ currentCountry?.descripcion }}</span>
+                </div>
+              </mat-select-trigger>
+              <mat-option *ngFor="let pais of paises" [value]="pais.clave">
+                <div class="custom-select-country-option">
+                  <img *ngIf="pais.icon" class="custom-select-country-option-img"
+                    src="assets/images/catalogs/countries/{{ pais.icon }}" alt="" /><span>{{ pais.descripcion }}</span>
+                </div>
+              </mat-option>
+            </mat-select>
+            <mat-icon matPrefix><span class="material-symbols-outlined">flag</span></mat-icon>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Aseguradora ({{ aseguradora.length }})</mat-label>
+            <mat-select formControlName="aseguradora">
+              <mat-option *ngFor="let item of aseguradora" [value]="item._id">
+                {{ item.nombreComercial }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matPrefix><span class="material-symbols-outlined">cases</span></mat-icon>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Proyecto ({{ proyecto.length }})</mat-label>
+            <mat-select formControlName="proyecto" (selectionChange)="onChangeProyecto($event.value)">
+              <mat-option *ngFor="let item of proyecto" [value]="item._id">
+                {{ item.codigo }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matPrefix><span class="material-symbols-outlined">devices_fold</span></mat-icon>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Tipo persona</mat-label>
+            <mat-select formControlName="tipoPersona">
+              <mat-option *ngFor="let item of tipoPersona" [value]="item.clave">
+                {{ item.descripcion }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matPrefix><span class="material-symbols-outlined">supervisor_account</span></mat-icon>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Giro</mat-label>
+            <mat-select formControlName="giro">
+              <mat-option *ngFor="let item of giro" [value]="item.clave">
+                {{ item.descripcion }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matPrefix><span class="material-symbols-outlined">deblur</span></mat-icon>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Estatus</mat-label>
+            <mat-select formControlName="estatus">
+              <mat-option *ngFor="let item of estatus" [value]="item.clave">
+                {{ item.descripcion }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matPrefix><span class="material-symbols-outlined">toggle_off</span></mat-icon>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div *ngIf="configuracion.length > 0" class="row">
+        <app-adm-configuracion-documental-table
+          [configuracion]="configuracion"
+          [motivo]="motivo" (updateConfiguracionEvent)="updateConfiguracionEvent()"
+          [action]="action">
+        </app-adm-configuracion-documental-table>
+      </div>
+
+      <div  class="row" *ngIf="configuracion.length === 0 && frmConfiguracionDocumental.controls['pais']?.value !== ''">
+        <div class="col-12">
+          <div class="alert alert-warning" role="alert">
+            El país seleccionado no cuenta con documentos asociados.
+            <br>
+        </div>
+        </div>
+      </div>
+
+      <div class="row text-end">
+        <div class="col-12">
+          <button type="button" class="btn btn-danger mx-1" (click)="return()">
+            {{ action === 2 ? "Regresar" : "Cancelar" }}
+          </button>
+          <button type="submit" class="btn btn-primary" *ngIf="action !== 2">
+            {{ action === 0 ? "Guardar" : "Actualizar" }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

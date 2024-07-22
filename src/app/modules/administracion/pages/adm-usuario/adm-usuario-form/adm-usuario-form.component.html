@@ -1,0 +1,362 @@
+<app-share-breadcrumb [breadcrumbs]="breadcrumbs"></app-share-breadcrumb>
+
+<mat-card class="mb-25 teggium-card">
+  <mat-card-header>
+    <h5 class="teggium-titulo">{{ title | translate }}</h5>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="frmUsuario" (ngSubmit)="submit()">
+      <div class="row">
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>{{
+              "administracion.usuario.form.nombre" | translate
+            }}</mat-label>
+            <input
+              #inputNombre
+              type="text"
+              matInput
+              maxlength="35"
+              formControlName="nombre"
+            />
+            <mat-icon matPrefix>person_outline</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>{{
+              "administracion.usuario.form.primerApellido" | translate
+            }}</mat-label>
+            <input
+              type="text"
+              matInput
+              maxlength="35"
+              formControlName="primerApellido"
+            />
+            <mat-icon matPrefix>person_outline</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>{{
+              "administracion.usuario.form.segundoApellido" | translate
+            }}</mat-label>
+            <input
+              type="text"
+              matInput
+              maxlength="35"
+              formControlName="segundoApellido"
+            />
+            <mat-icon matPrefix>person_outline</mat-icon>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-8">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>{{
+              "administracion.usuario.form.correoElectronico" | translate
+            }}</mat-label>
+            <input
+              type="email"
+              maxlength="100"
+              matInput
+              formControlName="correoElectronico"
+            />
+            <mat-icon matPrefix>alternate_email</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-4" *ngIf="currentUserId">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>{{
+              "administracion.usuario.form.estado" | translate
+            }}</mat-label>
+            <mat-select formControlName="estatus">
+              <mat-option *ngFor="let item of estatus" [value]="item.clave">
+                {{ item.descripcion }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matPrefix
+              ><span class="material-symbols-outlined"
+                >local_police</span
+              ></mat-icon
+            >
+          </mat-form-field>
+        </div>
+      </div>
+
+      <ng-container *ngIf="title !== 'administracion.usuario.form.titles.view'">
+        <mat-divider class="my-4"></mat-divider>
+
+        <div class="row">
+          <div class="col-md-4">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>{{
+                "administracion.usuario.form.pais" | translate
+              }}</mat-label>
+              <mat-select
+                formControlName="pais"
+                (selectionChange)="onPaisSelectionChange($event.value)"
+              >
+                <mat-select-trigger>
+                  <div class="custom-select-country-select">
+                    <img
+                      *ngIf="currentCountry?.icon"
+                      class="custom-select-country-select-img"
+                      src="assets/images/catalogs/countries/{{
+                        currentCountry?.icon
+                      }}"
+                      alt=""
+                    />
+                    <span>{{ currentCountry?.descripcion }}</span>
+                  </div>
+                </mat-select-trigger>
+                <mat-option *ngFor="let pais of paises" [value]="pais.clave">
+                  <div class="custom-select-country-option">
+                    <img
+                      *ngIf="pais.icon"
+                      class="custom-select-country-option-img"
+                      src="assets/images/catalogs/countries/{{ pais.icon }}"
+                      alt=""
+                    /><span>{{ pais.descripcion }}</span>
+                  </div>
+                </mat-option>
+              </mat-select>
+              <mat-icon matPrefix
+                ><span class="material-symbols-outlined">flag</span></mat-icon
+              >
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-8">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label
+                >{{ "administracion.usuario.form.proyecto" | translate }} ({{
+                  proyectosByPais && proyectosByPais.length
+                }})</mat-label
+              >
+              <mat-select formControlName="proyecto">
+                <mat-option
+                  *ngFor="let proyecto of proyectosByPais"
+                  [value]="proyecto._id"
+                  [disabled]="onCheckProjectWasAdded(proyecto._id)"
+                >
+                  {{ proyecto.codigo }}
+                </mat-option>
+              </mat-select>
+              <mat-icon matPrefix
+                ><span class="material-symbols-outlined"
+                  >assignment_ind</span
+                ></mat-icon
+              >
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>{{
+                "administracion.usuario.form.rol" | translate
+              }}</mat-label>
+              <mat-select multiple formControlName="perfil">
+                <mat-option
+                  *ngFor="let perfil of perfiles"
+                  [value]="perfil.clave"
+                >
+                  {{ perfil.descripcion }}
+                </mat-option>
+              </mat-select>
+              <mat-icon matPrefix
+                ><span class="material-symbols-outlined">badge</span></mat-icon
+              >
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 d-flex flex-column justify-content-center">
+            <button
+              type="button"
+              [disabled]="!onCheckToAddProject()"
+              class="btn btn-success py-2"
+              (click)="onAddOrUpdateProject()"
+            >
+              {{ projectEdit ? "Actualizar" : "Agregar" }} proyecto
+            </button>
+          </div>
+          <div
+            *ngIf="projectEdit"
+            class="col-md-2 d-flex flex-column justify-content-center"
+          >
+            <button
+              type="button"
+              class="btn btn-danger py-2"
+              (click)="onCancelEditProject()"
+            >
+              Cancelar
+            </button>
+          </div>
+        </div>
+      </ng-container>
+
+      <mat-divider class="my-4"></mat-divider>
+
+      <div class="row">
+        <div
+          class="alert alert-warning text-center"
+          role="alert"
+          *ngIf="projects?.length == 0; else dataProjects"
+        >
+          Se debe asignar al menos 1 proyecto por usuario.
+        </div>
+        <ng-template #dataProjects>
+          <mat-table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="pais">
+              <mat-header-cell *matHeaderCellDef mat-sort-header
+                >País</mat-header-cell
+              >
+              <mat-cell *matCellDef="let row" class="d-flex gap-3">
+                <img
+                  *ngIf="getCountryFlagByCode(row.pais)"
+                  class="custom-select-country-option-img"
+                  src="assets/images/catalogs/countries/{{
+                    getCountryFlagByCode(row.pais)
+                  }}"
+                  alt=""
+                />
+                {{ getCountryByCode(row.pais) }}
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="proyecto">
+              <mat-header-cell *matHeaderCellDef mat-sort-header
+                >Proyecto</mat-header-cell
+              >
+              <mat-cell *matCellDef="let row">
+                {{ getProjectById(row.proyecto) }}
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="perfiles">
+              <mat-header-cell *matHeaderCellDef mat-sort-header
+                >Perfiles</mat-header-cell
+              >
+              <mat-cell *matCellDef="let row">
+                {{ getProfilesByCode(row.perfiles) }}
+              </mat-cell>
+            </ng-container>
+
+            <ng-container
+              matColumnDef="acciones"
+              *ngIf="title !== 'administracion.usuario.form.titles.view'"
+            >
+              <mat-header-cell *matHeaderCellDef mat-sort-header
+                >Acciones</mat-header-cell
+              >
+              <mat-cell *matCellDef="let row">
+                <button
+                  type="button"
+                  (click)="onDeleteProject(row.proyecto)"
+                  class="btn"
+                  mat-icon-button
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+                <button
+                  type="button"
+                  (click)="onLoadDataProject(row)"
+                  class="btn"
+                  mat-icon-button
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row
+              *matHeaderRowDef="displayedColumns"
+            ></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+          </mat-table>
+        </ng-template>
+      </div>
+
+      <!-- <div class="row">
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>{{
+              "administracion.usuario.form.correoElectronico" | translate
+            }}</mat-label>
+            <input
+              type="email"
+              maxlength="100"
+              matInput
+              formControlName="correoElectronico"
+            />
+            <mat-icon matPrefix>forward_to_inbox</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>{{
+              "administracion.usuario.form.rol" | translate
+            }}</mat-label>
+            <mat-select formControlName="perfil">
+              <mat-option
+                *ngFor="let perfil of perfiles"
+                [value]="perfil.clave"
+              >
+                {{ perfil.descripcion }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matPrefix
+              ><span class="material-symbols-outlined">badge</span></mat-icon
+            >
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-4" *ngIf="currentUserId">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>{{
+              "administracion.usuario.form.estado" | translate
+            }}</mat-label>
+            <mat-select formControlName="estatus">
+              <mat-option *ngFor="let item of estatus" [value]="item.clave">
+                {{ item.descripcion }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matPrefix
+              ><span class="material-symbols-outlined"
+                >local_police</span
+              ></mat-icon
+            >
+          </mat-form-field>
+        </div>
+      </div> -->
+
+      <div class="row text-end">
+        <div class="col-12">
+          <button type="button" class="btn btn-danger mx-1" (click)="return()">
+            {{
+              (action === 2
+                ? "general.options.return"
+                : "general.options.cancel"
+              ) | translate
+            }}
+          </button>
+          <button type="submit" class="btn btn-primary" *ngIf="action !== 2">
+            {{
+              (action === 0 ? "general.options.save" : "general.options.update")
+                | translate
+            }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

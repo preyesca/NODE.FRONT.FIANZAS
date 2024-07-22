@@ -1,0 +1,58 @@
+<section id="tabla-expediente-archivos" style="margin-top: 20px; margin-left: 10px; width: 97%;">
+    <div class="row">
+        <div class="col-md-12 tabla-no-responsive">
+            <!-- <mat-table [dataSource]="dataSource" class="mat-elevation-z8"> -->
+                <mat-table 
+                mat-table 
+                matSort 
+                (matSortChange)="sortChange($event)"
+                matSortDisableClear
+                matSortActive="fecha"
+                matSortDirection="desc"
+                [dataSource]="dataSource">
+                <ng-container matColumnDef="fecha">
+                    <mat-header-cell *matHeaderCellDef> Fecha </mat-header-cell>
+                    <mat-cell *matCellDef="let row" class="border-normal">
+                        {{row.fecha | pipeDatetimeFormat}}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="actividad">
+                    <mat-header-cell *matHeaderCellDef> Actividad </mat-header-cell>
+                    <mat-cell *matCellDef="let row; let indexRow = index">
+                        {{row.actividad}}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="estatus">
+                    <mat-header-cell *matHeaderCellDef>Estatus</mat-header-cell>
+                    <mat-cell *matCellDef="let row; let indexRow = index">
+                        {{row.estatusBitacora?.toUpperCase()}}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="comentarios">
+                    <mat-header-cell *matHeaderCellDef>Comentario</mat-header-cell>
+                    <mat-cell *matCellDef="let row; let indexRow = index">
+                        {{row.comentarios?.toUpperCase() }}
+                    </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns" class="table-header"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                
+                <tr class="row-empty" *matNoDataRow>
+                    <td class="mat-cell" colspan="5">No hay información para mostrar.</td>
+                </tr>
+            </mat-table>
+            <mat-paginator
+            [hidden]="length === 0"
+            [length]="length"
+            [pageSize]="pageSize"
+            [pageIndex]="pageIndex"
+            [pageSizeOptions]="itemsPorPage"
+            (page)="onChangePage($event)"
+            showFirstLastButtons
+          ></mat-paginator>
+        </div>
+    </div>
+</section>

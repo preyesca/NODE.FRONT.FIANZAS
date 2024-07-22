@@ -1,0 +1,111 @@
+<app-share-breadcrumb [breadcrumbs]="breadcrumbs"></app-share-breadcrumb>
+
+<mat-card class="mb-25 teggium-card">
+  <mat-card-header>
+    <h5 class="teggium-titulo">Búsquedas</h5>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="flex-container" style="margin-bottom: 40px">
+      <button
+        [class.active]="currentActiveButton == 1"
+        class="btn"
+        (click)="setActive(1)"
+        type="button"
+      >
+        <mat-icon>inbox</mat-icon>
+        <span>Activos</span>
+      </button>
+      <button
+        [class.active]="currentActiveButton == 2"
+        class="btn"
+        (click)="setActive(2)"
+        type="button"
+      >
+        <mat-icon>sync</mat-icon>
+        <span>Finalizados</span>
+      </button>
+    </div>
+
+    <mat-table
+      (matSortChange)="sortChange($event)"
+      mat-table
+      matSort
+      matSortDisableClear
+      matSortActive="fechaAlta"
+      matSortDirection="desc"
+      [dataSource]="dataSource"
+    >
+      <ng-container matColumnDef="folioMultisistema">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+          >Folio</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let row; let index = index"
+          class="border-normal"
+          >{{ row.folioCodigo }}</mat-cell
+        >
+      </ng-container>
+      <ng-container matColumnDef="cliente">
+        <mat-header-cell *matHeaderCellDef> Cliente </mat-header-cell>
+        <mat-cell *matCellDef="let row; let index = index">{{
+          row.cliente
+        }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="riesgo">
+        <mat-header-cell *matHeaderCellDef> Riesgo </mat-header-cell>
+        <mat-cell *matCellDef="let row; let index = index">{{
+          row.riesgo
+        }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="aseguradora">
+        <mat-header-cell *matHeaderCellDef> Aseguradora </mat-header-cell>
+        <mat-cell *matCellDef="let row; let index = index">{{
+          row.aseguradora
+        }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="actividad">
+        <mat-header-cell *matHeaderCellDef> Actividad </mat-header-cell>
+        <mat-cell *matCellDef="let row; let index = index">{{
+          row.actividad
+        }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="estado">
+        <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
+        <mat-cell *matCellDef="let row; let index = index">{{
+          row.estado
+        }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="fechaAlta">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          Fecha Inicio
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row; let index = index">{{
+          row.fechaInicio | pipeDatetimeFormat
+        }}</mat-cell>
+      </ng-container>
+
+      <mat-header-row
+        *matHeaderRowDef="displayColumns"
+        class="table-header"
+      ></mat-header-row>
+      <mat-row
+        *matRowDef="let row; let i = index; columns: displayColumns"
+        (dblclick)="onRowDoubleClick(row)"
+      ></mat-row>
+
+      <tr class="row-empty" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No hay información para mostrar.</td>
+      </tr>
+    </mat-table>
+
+    <mat-paginator
+      [hidden]="length === 0"
+      [length]="length"
+      [pageSize]="pageSize"
+      [pageIndex]="pageIndex"
+      [pageSizeOptions]="itemsPorPage"
+      (page)="onChangePage($event)"
+      showFirstLastButtons
+    ></mat-paginator>
+  </mat-card-content>
+</mat-card>

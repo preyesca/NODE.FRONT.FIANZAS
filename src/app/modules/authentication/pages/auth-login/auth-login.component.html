@@ -1,0 +1,64 @@
+<div class="wrapper-login">
+  <img
+    src="assets/images/logos/logo-teggium-dark.svg"
+    class="logo"
+    alt="logo"
+  />
+  <div class="form-holder">
+    <form
+      class="form"
+      autocomplete="off"
+      [formGroup]="frmLogin"
+      (ngSubmit)="login()"
+    >
+      <div class="form-group">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Correo electrónico</mat-label>
+          <input
+            #inputEmail
+            type="text"
+            matInput
+            formControlName="correoElectronico"
+            maxlength="70"
+            autocomplete="off"
+          />
+          <mat-icon matPrefix>person</mat-icon>
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Contraseña</mat-label>
+          <input
+            matInput
+            formControlName="password"
+            type="text"
+            [ngClass]="{ 'password-field': hiddenPassword }"
+            autocomplete="off"
+            maxlength="20"
+          />
+          <mat-icon matPrefix>lock</mat-icon>
+          <button
+            type="button"
+            class="password-icon"
+            mat-icon-button
+            matSuffix
+            (click)="hiddenPassword = !hiddenPassword"
+            [attr.aria-pressed]="hiddenPassword"
+          >
+            <mat-icon>{{
+              hiddenPassword ? "visibility_off" : "visibility"
+            }}</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <div class="form-group-button">
+        <button>Iniciar sesión</button>
+      </div>
+      <div class="form-group-resetPass">
+        <a routerLink="/authentication/recover-password"
+          >¿Olvidaste tu contraseña?</a
+        >
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+div.config-documental-table-title{
+   border-top: 1px solid rgb(233, 233, 233);
+   padding: 15px 0px;
+   margin: 15px 0px;
+}
+
+.mat-column-archivo{
+    flex: 0 0 500px !important;
+ }
+
+ .mat-column-fechaVigencia{
+    flex: 0 0 200px !important;
+ }
+
+.mat-column-operaciones{
+    flex: 0 0 200px !important;
+ }
+
+ 

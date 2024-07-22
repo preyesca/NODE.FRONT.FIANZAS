@@ -1,0 +1,114 @@
+{
+  "general": {
+    "options": {
+      "actions": "Actions",
+      "cancel": "Cancel",
+      "create": "Create",
+      "delete": "Delete",
+      "edit": "Edit",
+      "new": "New",
+      "return": "Return",
+      "save": "Save",
+      "search": "Search...",
+      "update": "Update",
+      "upload": "Upload",
+      "uploading": "Uploading",
+      "view": "View",
+      "logout": "Logout",
+      "download": "Download"
+    },
+    "table": {
+      "emptyResults": "No results found.",
+      "recordsPerPage": "Records per page",
+      "firstPage": "First page",
+      "lastPage": "Last page",
+      "previousPage": "Previous",
+      "nextPage": "Next",
+      "pageOf": "of"
+    }
+  },
+  "administracion": {
+    "title": "Administration",
+    "aseguradora": {},
+    "configuracion-documental": {},
+    "documento": {},
+    "proyecto": {},
+    "usuario": {
+      "titleSingular": "User",
+      "titlePlural": "Users",
+      "perfil": "Profile",
+      "form": {
+        "titles": {
+          "create": "New user",
+          "edit": "Edit user",
+          "view": "View user"
+        },
+        "pais": "Country",
+        "proyecto": "Project",
+        "nombre": "Name",
+        "primerApellido": "First Lastname",
+        "segundoApellido": "Second Lastname",
+        "correoElectronico": "Email Address",
+        "rol": "Role",
+        "estado": "Status"
+      },
+      "table": {
+        "pais": "Country",
+        "nombre": "Name",
+        "correoElectronico": "Email Address",
+        "estatus": "Status",
+        "sesionAbierta": "Open Session",
+        "rol": "Role"
+      }
+    },
+    "configuracion": {
+      "titleSingular": "Configuracion aseguradora",
+      "titlePlural": "Configuracion aseguradoras",
+      "form": {
+        "titles": {
+          "create": "Nueva configuracion aseguradora",
+          "edit": "Editar configuracion aseguradora",
+          "view": "Ver configuracion aseguradora"
+        },
+        "pais": "País",
+        "proyecto": "Proyecto",
+        "aseguradora": "Aseguradora",
+        "correo": "Correo electrónico"
+      },
+      "table": {
+        "pais": "País",
+        "proyecto": "Proyecto",
+        "aseguradora": "Aseguradora"
+      }
+    },
+    "reporte": {
+      "form": {
+        "seleccionReporte": "Select your report",
+        "fechaInicio": "Start date",
+        "fechaFin": "End date",
+        "destinatarios": "Recipients"
+      },
+      "titlePlural": "Reports",
+      "messageEmailInvalid": "Enter a valid email",
+      "messageEmailDuplicate": "The email is already registered",
+      "titleSingular": "Report",
+      "successMessage": "The report will be sent to the recipients entered.",
+      "mensajeAgregarCorreo": "To add more than one email, enter a valid one and press"
+    }
+  },
+  "kyc": {
+    "title": "Know your client",
+    "administracion": {},
+    "core": {
+      "folio": {
+        "title": "Folio",
+        "nuevo": {
+          "title": "New folio",
+          "placeholderFile": "Select a file",
+          "requiredFile": "You need to select a valid Excel file.",
+          "uploadSuccessful": "Successful upload"
+        }
+      }
+    }
+  }
+}

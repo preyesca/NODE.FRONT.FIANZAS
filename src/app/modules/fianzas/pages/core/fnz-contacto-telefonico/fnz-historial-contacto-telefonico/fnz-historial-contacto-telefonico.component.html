@@ -1,0 +1,70 @@
+<mat-table mat-table matSort [dataSource]="dataSource">
+  <ng-container matColumnDef="fechaContacto">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>
+      Fecha contacto
+    </mat-header-cell>
+    <mat-cell *matCellDef="let row; let index = index"
+      >{{ row.fechaContacto | pipeDatetimeFormat }}
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="usuario">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>
+      Usuario
+    </mat-header-cell>
+    <mat-cell *matCellDef="let row; let index = index"
+      >{{ row.usuario }}
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="tipoLlamada">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>
+      Llamada
+    </mat-header-cell>
+    <mat-cell *matCellDef="let row; let index = index"
+      >{{ row.tipoLlamada }}
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="estatus">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>
+      Estatus
+    </mat-header-cell>
+    <mat-cell *matCellDef="let row; let index = index"
+      >{{ row.estatus }}
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="fechaProximaLlamada">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>
+      Próxima llamada
+    </mat-header-cell>
+    <mat-cell *matCellDef="let row; let index = index"
+      >{{ row.fechaProximaLlamada | pipeDatetimeFormat }}
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="observaciones">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>
+      Observaciones
+    </mat-header-cell>
+    <mat-cell *matCellDef="let row; let index = index"
+      >{{ row.observaciones }}
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row
+    class="table-header"
+    *matHeaderRowDef="displayColumns"
+  ></mat-header-row>
+  <mat-row
+    *matRowDef="let row; let i = index; columns: displayColumns"
+  ></mat-row>
+
+  <tr class="row-empty" *matNoDataRow>
+    <td class="mat-cell" colspan="4">No hay información para mostrar.</td>
+  </tr>
+</mat-table>
+
+<mat-paginator
+  [hidden]="dataSource.data.length === 0"
+  #paginator
+  [pageSizeOptions]="itemsPorPage"
+  showFirstLastButtons
+>
+</mat-paginator>

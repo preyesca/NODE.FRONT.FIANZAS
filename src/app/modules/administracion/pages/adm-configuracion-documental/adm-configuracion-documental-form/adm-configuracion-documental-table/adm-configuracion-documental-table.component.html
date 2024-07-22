@@ -1,0 +1,70 @@
+<div class="config-documental-table-title">
+  <h5>Documentos ({{dataSource.data.length}})</h5>
+</div>
+
+<section id="tabla-archivos">
+  <div class="row">
+    <mat-table  [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</mat-header-cell>
+        <mat-cell *matCellDef="let row" [ngClass]="{
+              'border-active': row?.activo === true, 
+              'border-normal': row?.activo === false }">
+          {{row.nombre}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="activo" >
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Activo </mat-header-cell>
+        <mat-cell *matCellDef="let row; let index = index">
+          <mat-checkbox color="primary" [disabled]="isView" name="activo{{index}}" (change)="changeActivo(index,$event)"
+            [checked]="row.activo"></mat-checkbox>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="obligatorio"  >
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Obligatorio </mat-header-cell>
+        <mat-cell *matCellDef="let row; let index = index">
+          <mat-checkbox color="primary" [disabled]="!row.activo || isView" color="primary" name="obligatorio{{index}}"
+            (change)="changeObligatorio(index,$event)" [checked]="row.obligatorio"></mat-checkbox>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="ocr">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> OCR</mat-header-cell>
+        <mat-cell *matCellDef="let row; let index = index">
+          <mat-checkbox color="primary" [disabled]="true" color="primary" name="ocr{{index}}"
+            (change)="changeOcr(index,$event)" [checked]="row.ocr"></mat-checkbox>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="vigencia">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Vigencia</mat-header-cell>
+        <mat-cell *matCellDef="let row; let index = index">
+          <mat-checkbox color="primary" [disabled]="!row.activo || isView" color="primary" name="vigencia{{index}}"
+            (change)="changeVigencia(index,$event)" [checked]="row.vigencia"></mat-checkbox>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="motivosRechazo">
+        <mat-header-cell *matHeaderCellDef> Motivo rechazo </mat-header-cell>
+        <mat-cell contenteditable=false *matCellDef="let row; let index = index">
+          <mat-form-field appearance="outline">
+            <mat-label>Motivo rechazo</mat-label>
+            <mat-select ngModel name="motivo{{index}}" multiple [disabled]="!row.activo || isView || row.clave === 'FIC' || row.clave === 'ANEXO_FIC' || row.clave === 'ACUSE_ENVIO'
+            || row.clave === 'VALIDACION_DE_ORIGINALES' || row.clave === 'CONFIRMACION_ENTREGA' "
+              [required]="row.activo" [(ngModel)]="row.motivosRechazo">
+              <mat-option class="option" *ngFor="let option of row.motivo" [value]="option.clave"
+                (onSelectionChange)="onChangeMotivo(index, option.clave)">{{option.descripcion}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="updateConfiguracion()"></mat-row>
+    </mat-table>
+
+
+  </div>
+</section>

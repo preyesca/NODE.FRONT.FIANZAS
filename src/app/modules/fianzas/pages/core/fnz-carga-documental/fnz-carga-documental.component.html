@@ -1,0 +1,86 @@
+<app-share-breadcrumb [breadcrumbs]="breadcrumbs"></app-share-breadcrumb>
+<mat-card class="mb-25 teggium-card" *ngIf="!loading">
+  <mat-card-header>
+    <div class="teggium-titulo-encabezado">
+      <h5 class="teggium-titulo">
+        Carga documental<span
+          *ngIf="readonlyModule"
+          class="title-readonlyModule"
+          >Modo consulta</span
+        >
+      </h5>
+      <app-fnz-encabezado [folio]="folio.folio"></app-fnz-encabezado>
+      <app-fnz-flujo-consulta
+        *ngIf="readonlyModule"
+        [flujoConsulta]="folio.flujoConsulta"
+      >
+      </app-fnz-flujo-consulta>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <div *ngIf="isUploading">
+      <span>Espere un momento por favor...</span>
+      <mat-progress-bar mode="indeterminate">
+        {{ uploadProgress }}%</mat-progress-bar
+      >
+    </div>
+
+    <ng-container *ngIf="!isUploading">
+      <app-fnz-status-documentos
+        *ngIf="documentos.length > 0"
+        [documentos]="this.documentos"
+        [pendientes]="pendientes"
+      ></app-fnz-status-documentos>
+
+      <div class="row">
+        <app-fnz-shared-upload
+          *ngIf="!readonlyModule"
+          [documentos]="this.catalogos!.documento"
+          [titular]="folio.titular"
+          [aseguradora]="folio.aseguradoraId"
+          (updateEventResponseEmitter)="updateEventResponseEmitter($event)"
+        >
+        </app-fnz-shared-upload>
+      </div>
+      <form [formGroup]="frmComentario">
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Comentarios</mat-label>
+              <textarea
+                matInput
+                placeholder="Comentarios"
+                formControlName="comentarios"
+                rows="2"
+                spellcheck="true"
+              ></textarea>
+              <mat-icon matPrefix>comment</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12 text-center text-md-end">
+            <div class="col-12 text-center text-md-end">
+              <button
+                type="button"
+                (click)="return()"
+                class="btn btn-danger mx-1"
+              >
+                Cancelar
+              </button>
+              <button
+                *ngIf="!readonlyModule"
+                class="btn btn-primary"
+                (click)="saveData()"
+                [disabled]="frmComentario.invalid"
+              >
+                Continuar
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </ng-container>
+  </mat-card-content>
+</mat-card>

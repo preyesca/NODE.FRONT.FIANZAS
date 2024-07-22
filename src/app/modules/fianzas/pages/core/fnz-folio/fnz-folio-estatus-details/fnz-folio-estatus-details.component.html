@@ -1,0 +1,152 @@
+<app-share-breadcrumb [breadcrumbs]="breadcrumbs"></app-share-breadcrumb>
+
+<mat-card class="mb-25 teggium-card">
+  <mat-card-header>
+    <h5 class="teggium-titulo">Estatus carga</h5>
+    <a class="btn btn-danger" (click)="return()">Regresar</a>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="c-estatus-folio">
+      <div class="c-estatus-folio-inner">
+        <div class="c-estatus-folio-body">
+          <div class="row">
+            <div class="col-md-6 col-lg-3">
+              <div class="header-cell">
+                <label>Nombre de archivo</label>
+                <div class="filename-with-extension">
+                  <mat-icon
+                    matPrefix
+                    title="Hoja de cálculo de Microsoft Excel (*.xlsx, *.xls)"
+                  >
+                    <span class="material-symbols-filled">description</span>
+                  </mat-icon>
+                  <span class="filename">{{ layoutHeader.filename }}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+              <div class="header-cell">
+                <label>Tamaño</label>
+                <span>{{ layoutHeader.archivoSize | pipeFileSizeFormat }}</span>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <div class="header-cell">
+                <label>Fecha inicio carga</label>
+                <span>
+                  {{ layoutHeader.fechaInicioCarga | pipeDatetimeFormat }}</span
+                >
+              </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+              <div class="header-cell">
+                <label>Fecha fin carga</label>
+                {{ layoutHeader.fechaFinCarga | pipeDatetimeFormat }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="c-searching">
+      <div class="row row-right">
+        <div class="col-md-4">
+          <div class="teggium-search">
+            <div class="teggium-search-inner">
+              <input
+                type="text"
+                class="input-search d-block"
+                placeholder="Buscar..."
+              />
+              <button type="button"><i class="ri-search-line"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      multiTemplateDataRows
+      matSort
+      matSortDisableClear
+      [matSortActive]="paginateParams.order"
+      [matSortDirection]="paginateParams.sort"
+    >
+      <ng-container matColumnDef="rowIndex">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Fila del documento</th>
+        <td mat-cell *matCellDef="let row" class="border-inactive">
+          {{ "Fila " + (row["rowIndex"] + 1) }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="message">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Mensaje</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.message }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="expandedDetail">
+        <td
+          mat-cell
+          *matCellDef="let element"
+          [attr.colspan]="displayColumns.length"
+        >
+          <div
+            class="example-element-detail"
+            [@detailExpand]="
+              element == expandedElement ? 'expanded' : 'collapsed'
+            "
+          >
+            <table>
+              <tr>
+                <th>Columna</th>
+                <th>Campo</th>
+                <!-- <th>Estado</th> -->
+                <th>Mensaje</th>
+              </tr>
+              <tr *ngFor="let col of element.columns">
+                <td>{{ col.columnIndex }}</td>
+                <td>{{ col.columnName }}</td>
+                <!-- <td>{{ col.success }}</td> -->
+                <td>{{ col.message }}</td>
+              </tr>
+            </table>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr
+        mat-header-row
+        *matHeaderRowDef="displayColumns"
+        class="table-header"
+      ></tr>
+      <tr
+        mat-row
+        *matRowDef="let element; columns: displayColumns"
+        class="example-element-row"
+        [class.example-expanded-row]="expandedElement === element"
+        (click)="expandedClick(element)"
+      ></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: ['expandedDetail']"
+        class="example-detail-row"
+      ></tr>
+    </table>
+
+    <mat-paginator
+      #paginator
+      showFirstLastButtons
+      [pageSizeOptions]="itemsPorPage"
+      [length]="totalDocs"
+      [pageIndex]="paginateParams.pageIndex"
+      (page)="onPageEvent($event)"
+    ></mat-paginator>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,100 @@
+<app-share-breadcrumb [breadcrumbs]="breadcrumbs"></app-share-breadcrumb>
+
+<mat-card class="mb-25 teggium-card">
+     <mat-card-header>
+          <h5 class="teggium-titulo">Proyectos</h5>
+          <a class="btn btn-primary" (click)="create()">Nuevo</a>
+     </mat-card-header>
+     <mat-card-content>
+          <div class="">
+               <mat-table 
+               mat-table 
+               matSort 
+               matSortDisableClear
+               matSortActive="aseguradora"
+               matSortDirection="asc"
+               (matSortChange)="sortChange($event)" 
+               [dataSource]="dataSource">
+                    <ng-container matColumnDef="paisDescripcion">
+                         <mat-header-cell *matHeaderCellDef>País</mat-header-cell>
+                         <mat-cell *matCellDef="let row" [ngClass]="{
+                             'border-active': row?.estatus === 1,
+                             'border-inactive': row?.estatus === 0 }">
+                              <div class="col-country">
+                                   <img src="assets/images/catalogs/countries/{{row.paisIcon}}" alt="icon_flag">
+                                   {{row.paisDescripcion}}
+                              </div>
+                         </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="aseguradora">
+                         <mat-header-cell *matHeaderCellDef mat-sort-header>Aseguradora</mat-header-cell>
+                         <mat-cell *matCellDef="let row">{{row.aseguradoraNombreComercial}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="ramoDescripcion">
+                         <mat-header-cell *matHeaderCellDef >Ramo</mat-header-cell>
+                         <mat-cell *matCellDef="let row">{{row.ramoDescripcion}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="procesoDescripcion">
+                         <mat-header-cell *matHeaderCellDef >Proceso</mat-header-cell>
+                         <mat-cell *matCellDef="let row">{{row.procesoDescripcion}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="negocioDescripcion">
+                         <mat-header-cell *matHeaderCellDef >Negocio</mat-header-cell>
+                         <mat-cell *matCellDef="let row">{{row.negocioDescripcion}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="estatus">
+                         <mat-header-cell *matHeaderCellDef mat-sort-header>Estatus</mat-header-cell>
+                         <mat-cell *matCellDef="let row">
+                              <div class="{{ row.estatus === 1 ? 'tag-active': 'tag-inactive' }}">
+                                   {{row.estatusDescripcion}}
+                              </div>
+                         </mat-cell>
+                    </ng-container>
+
+                    <!-- Action Column -->
+                    <ng-container matColumnDef="action">
+                         <mat-header-cell *matHeaderCellDef class="col-action">Acciones</mat-header-cell>
+                         <mat-cell *matCellDef="let row" class="col-action">
+                              <button type="button" mat-button
+                                   class="position-relative dot-btn p-0 bg-transparent border-none"
+                                   [matMenuTriggerFor]="actionMenu">
+                                   <i class="ri-more-fill"></i>
+                              </button>
+                              <mat-menu #actionMenu="matMenu" class="dotMenu two monthMenu" xPosition="before">
+                                   <button mat-menu-item type="button" (click)="edit(row._id)"
+                                        class="bg-transparent border-none position-relative">
+                                        <i class="ri-edit-line"></i>Editar
+                                   </button>
+                                   <button mat-menu-item type="button" (click)="view(row._id)"
+                                        class="bg-transparent border-none position-relative">
+                                        <i class="ri-eye-line"></i>Ver
+                                   </button>
+                              </mat-menu>
+                         </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns" class="table-header"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+                    <tr class="row-empty" *matNoDataRow>
+                         <td class="mat-cell" colspan="7">No hay información para mostrar.</td>
+                     </tr>
+               </mat-table>
+
+               <!-- <mat-paginator [hidden]="dataSource.data.length === 0" [pageSizeOptions]="itemsPorPage" showFirstLastButtons></mat-paginator> -->
+               <mat-paginator
+               [length]="length"
+               [pageSize]="pageSize"
+               [pageIndex]="pageIndex"
+               [pageSizeOptions]="itemsPorPage"
+               (page)="onChangePage($event)"
+               showFirstLastButtons
+             ></mat-paginator>
+          </div>
+     </mat-card-content>
+</mat-card>

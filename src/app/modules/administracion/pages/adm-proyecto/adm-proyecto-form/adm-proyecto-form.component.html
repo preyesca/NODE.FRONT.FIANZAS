@@ -1,0 +1,171 @@
+<app-share-breadcrumb [breadcrumbs]="breadcrumbs"></app-share-breadcrumb>
+
+<h5 class="teggium-titulo">{{title}} proyecto</h5>
+<mat-card class="mb-25">
+  <!-- <mat-card-header>
+    <h5 class="teggium-titulo">{{title}} proyecto</h5>
+  </mat-card-header> -->
+  <mat-card-content>
+    <form [formGroup]="frmProyecto" (ngSubmit)="submit()">
+      <mat-tab-group mat-align-tabs="center">
+        <mat-tab label="Información General">
+          <ng-template matTabContent>
+            <div class="row mt-3 w-100">
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>País</mat-label>
+                  <mat-select formControlName="pais" (selectionChange)="onChangeGenerateCode()">
+                    <mat-select-trigger>
+                      <div class="custom-select-country-select">
+                        <img *ngIf="currentCountry?.icon" class="custom-select-country-select-img"
+                          src="assets/images/catalogs/countries/{{currentCountry?.icon}}" alt="" />
+                        <span>{{ currentCountry?.descripcion }}</span>
+                      </div>
+                    </mat-select-trigger>
+                    <mat-option *ngFor="let pais of paises" [value]="pais.clave">
+                      <div class="custom-select-country-option">
+                        <img *ngIf="pais.icon" class="custom-select-country-option-img"
+                          src="assets/images/catalogs/countries/{{ pais.icon }}" alt="" /><span>{{ pais.descripcion }}</span>
+                      </div>
+                    </mat-option>
+                  </mat-select>
+                  <mat-icon matPrefix><span class="material-symbols-outlined">flag</span></mat-icon>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Aseguradora</mat-label>
+                  <mat-select formControlName="aseguradora" (selectionChange)="onChangeGenerateCode()">
+                    <mat-option *ngFor="let item of aseguradora" [value]="item._id">
+                      {{ item.nombreComercial }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-icon matPrefix><span class="material-symbols-outlined">cases</span></mat-icon>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Proceso</mat-label>
+                  <mat-select formControlName="proceso" (selectionChange)="onChangeProceso($event.value)">
+                    <mat-option *ngFor="let item of proceso" [value]="item.clave">
+                      {{ item.descripcion }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-icon matPrefix><span class="material-symbols-outlined">auto_mode</span></mat-icon>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row w-100" style="overflow: hidden;">
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Ramo</mat-label>
+                  <mat-select formControlName="ramo" (selectionChange)="onChangeGenerateCode()">
+                    <mat-option *ngFor="let item of ramo" [value]="item.clave">
+                      {{ item.descripcion }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-icon matPrefix><span class="material-symbols-outlined">mediation</span></mat-icon>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Negocio</mat-label>
+                  <mat-select formControlName="negocio" (selectionChange)="onChangeGenerateCode()">
+                    <mat-option *ngFor="let item of negocio" [value]="item.clave">
+                      {{ item.descripcion }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-icon matPrefix><span class="material-symbols-outlined">corporate_fare</span></mat-icon>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>CECO</mat-label>
+                  <input type="text" matInput formControlName="ceco" />
+                  <mat-icon matPrefix><span class="material-symbols-outlined">local_offer</span></mat-icon>
+                </mat-form-field>
+              </div>
+
+            </div>
+
+            <div class="row w-100" style="overflow: hidden;">
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Estatus</mat-label>
+                  <mat-select formControlName="estatus">
+                    <mat-option *ngFor="let item of estatus" [value]="item.clave">
+                      {{ item.descripcion }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-icon matPrefix><span class="material-symbols-outlined">toggle_off</span></mat-icon>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-8">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Código</mat-label>
+                  <input type="text" matInput formControlName="codigo" [readonly]="true" />
+                  <mat-icon matPrefix><span class="material-symbols-outlined">barcode</span></mat-icon>
+                </mat-form-field>
+              </div>
+            </div>
+          </ng-template>
+
+        </mat-tab>
+
+        <mat-tab label="Configuración">
+          <ng-template matTabContent>
+            <div class="row mt-3 w-100">
+              <div class="col-md-6">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Nombre Cliente</mat-label>
+                  <input type="text" matInput formControlName="nombreCliente" />
+                  <mat-icon matPrefix><span class="material-symbols-outlined">for_you</span></mat-icon>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-6">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Nombre Comercial</mat-label>
+                  <input type="text" matInput formControlName="nombreComercial" />
+                  <mat-icon matPrefix><span class="material-symbols-outlined">source_environment</span></mat-icon>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <h5 class="teggium-titulo mt-3">Portal</h5>
+
+            <div class="row w-100">
+              <div class="col-md-12">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>URL del Portal</mat-label>
+                  <input type="text" matInput formControlName="portal" />
+                  <mat-icon matPrefix><span class="material-symbols-outlined">link</span></mat-icon>
+                </mat-form-field>
+                <mat-error *ngIf="!!frmProyecto.controls['portal'].hasError('pattern')">
+                  La url ingresada no tiene un formato válido
+                </mat-error>
+              </div>
+            </div>
+
+            <div class="row text-end w-100">
+              <div class="col-12">
+                <button type="button" class="btn btn-danger mx-1" (click)="return()">
+                  {{ action === 2 ? "Regresar" : "Cancelar" }}
+                </button>
+                <button type="submit" class="btn btn-primary" *ngIf="action !== 2">
+                  {{ action === 0 ? "Guardar" : "Actualizar" }}
+                </button>
+              </div>
+            </div>
+          </ng-template>
+        </mat-tab>
+      </mat-tab-group>
+    </form>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,9 @@
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-space-between">
+    <h5 class="mb-0"></h5>
+    <ol class="breadcrumb mb-0 ps-0">
+        <li class="breadcrumb-item fw-semibold" *ngFor="let item of breadcrumbs; first as isFirst">
+            <span class="ri-home-8-line" *ngIf="isFirst"></span>
+            {{ item | translate }}
+        </li>
+    </ol>
+</div>

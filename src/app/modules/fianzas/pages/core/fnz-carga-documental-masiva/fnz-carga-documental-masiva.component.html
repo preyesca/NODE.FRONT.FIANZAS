@@ -1,0 +1,103 @@
+<app-share-breadcrumb [breadcrumbs]="breadcrumbs"></app-share-breadcrumb>
+<mat-card class="mb-25 teggium-card">
+  <mat-card-header>
+    <h5 class="teggium-titulo">Carga documental masiva</h5>
+  </mat-card-header>
+  <mat-card-content>
+    <div *ngIf="isUploading">
+      <span>Espere un momento por favor...</span>
+      <mat-progress-bar mode="indeterminate"> {{uploadProgress}}%</mat-progress-bar>
+    </div>
+    <ng-container *ngIf="!isUploading">
+
+      <div *ngIf="this.cliente.length == 0" class="custom-input-file col-7 custom-select-files"> <img
+          src="assets/images/flujo-consulta/flujo/solicitud.notstarted.svg" width="80px" />
+        <h5>No hay solicitudes activas</h5>
+      </div>
+
+      <div *ngIf="this.cliente.length > 0"  class="custom-input-file col-7" style="margin-top: 25px; margin-bottom: 35px;"
+        (click)="fileInputMultiple.value">
+        <input #fileInputMultiple type="file" id="fichero-tarifas" class="input-file" [accept]="extension_valid"
+          (change)="selectFiles(fileInputMultiple.files)" multiple>
+        <img src="assets/images/icons/folder-open-1.svg" width="100px">
+        <h5>Selecciona tus documentos</h5>
+      </div>
+
+      <form #docsForm="ngForm">
+        <div *ngIf="this.dataSource.data.length > 0">
+          <mat-table class="table-general" mat-table [dataSource]="dataSource">
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; let i = index; columns: displayedColumns;"></mat-row>
+
+            <ng-container matColumnDef="nombre" matColumnDisplay="false">
+              <mat-header-cell *matHeaderCellDef> Archivo </mat-header-cell>
+              <mat-cell *matCellDef="let row; let index = index" class="border-active">
+                <span class="mobile-label"> Archivo</span> {{row.nombreOriginal}}
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="titular">
+              <mat-header-cell *matHeaderCellDef> Cliente </mat-header-cell>
+              <mat-cell *matCellDef="let row; let index = index">
+                <mat-form-field class="input-multi" style="width: 400px;" appearance="outline">
+                  <mat-select ngModel name="titular{{index}}" (selectionChange)="onChangeTitular(index, $event.value)"
+                    [(value)]="row.titular" required placeholder="Cliente">
+                    <mat-option class="option" *ngFor="let option of this.cliente"
+                      [value]="option.cliente_id">{{option.numeroCliente}}-{{option.cliente}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="documento">
+              <mat-header-cell *matHeaderCellDef> Documento </mat-header-cell>
+              <mat-cell contenteditable=false *matCellDef="let row; let index = index">
+                <mat-form-field style="width: 400px;" appearance="outline">
+                  <mat-select ngModel name="documento{{index}}"
+                    (selectionChange)="onChangeDocumento(index, $event.value)" required placeholder="Documento">
+                    <mat-option class="option" *ngFor="let option of this.documentos"
+                      [value]="option._id">{{option.nombre}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="fechaVigencia">
+              <mat-header-cell *matHeaderCellDef> Fecha Vigencia </mat-header-cell>
+              <mat-cell contenteditable=false *matCellDef="let row;let index=index">
+                <mat-form-field appearance="outline">
+                  <input matInput ngModel [matDatepicker]="fechaVigencia" name="fechaVigencia{{index}}"
+                    placeholder="Fecha Vigencia*" (dateChange)="onChangeFechaVigencia(index,$event.value)"
+                    [required]="row.vigencia" />
+                  <mat-datepicker-toggle matSuffix [for]="fechaVigencia"></mat-datepicker-toggle>
+                  <mat-datepicker #fechaVigencia></mat-datepicker>
+                </mat-form-field>
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="operaciones">
+              <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+              <mat-cell *matCellDef="let row;let index=index">
+                <button class="btn mx-3" style="cursor: pointer;" (click)="deleteFile(index)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+
+                <button class="btn" style="cursor: pointer;" (click)="showFile(index)">
+                  <mat-icon>visibility</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+          </mat-table>
+        </div>
+        <br>
+        <br>
+        <div *ngIf="this.dataArchivos.length > 0" class="row mb-5">
+          <div class="col-md-12 text-end">
+            <button class="btn btn-danger mx-3" (click)="clear()">Limpiar</button>
+            <button type="submit" class="btn btn-primary" (click)="uploadFiles(docsForm);">Subir</button>
+          </div>
+        </div>
+      </form>
+    </ng-container>
+  </mat-card-content>
+</mat-card>

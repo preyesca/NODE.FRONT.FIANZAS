@@ -1,0 +1,104 @@
+<section id="tabla-expediente-archivos" style="margin-top: 20px; margin-left: 10px; width: 97%">
+  <div class="row" *ngIf="folio">
+    <div class="c-encabezado-body mb-2">
+      <div class="row">
+        <div class="col-md">
+          <label>Ejecutivo:</label>
+          <span>{{ nombreEjecutivo }}</span>
+          <span class="warn-darker-color" *ngIf="!firmaEjecutivo">(No tiene firma configurada)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 tabla-no-responsive">
+      <mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="documento">
+          <mat-header-cell *matHeaderCellDef> Documento </mat-header-cell>
+          <mat-cell *matCellDef="let row" class="border-normal">
+            {{ row.documento }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="archivo">
+          <mat-header-cell *matHeaderCellDef> Archivo </mat-header-cell>
+          <mat-cell *matCellDef="let row; let indexRow = index">
+            {{ row.nombreCorto }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="fechaCarga">
+          <mat-header-cell *matHeaderCellDef>Fecha carga </mat-header-cell>
+          <mat-cell *matCellDef="let row; let indexRow = index">
+            {{ row.fechaAlta | pipeDatetimeFormat }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="peso">
+          <mat-header-cell *matHeaderCellDef> Peso </mat-header-cell>
+          <mat-cell *matCellDef="let row; let indexRow = index">
+            {{ row.archivoSize | pipeFileSizeFormat }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="seCoteja">
+          <mat-header-cell *matHeaderCellDef>Se coteja?</mat-header-cell>
+          <mat-cell *matCellDef="let element; let index = index">
+            <mat-slide-toggle 
+            [disabled]="!firmaEjecutivo" 
+            [(ngModel)]="element.changeCotejado"
+            (change)="onChangeCheck(element)" 
+            color="primary" [checked]="element.cotejado"
+            name="Check{{ index }}{{ element.id }}">
+              {{ element.changeCotejado ? "Sí" : "No" }}</mat-slide-toggle>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="operaciones">
+          <mat-header-cell *matHeaderCellDef>Descargar</mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button *ngIf="row.cotejado" class="btn" style="padding-left: 0px; padding-right: 5px" type="button"
+              (click)="click_descargar(row)">
+              <mat-icon>download</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row class="table-header" *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+        <tr class="row-empty" *matNoDataRow>
+          <td class="mat-cell" colspan="5">No hay información para mostrar.</td>
+        </tr>
+      </mat-table>
+      <mat-paginator 
+        [length]="length" 
+        [pageSize]="pageSize" 
+        [pageIndex]="pageIndex" 
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="onChangePage($event)" 
+        showFirstLastButtons></mat-paginator>
+
+      <div class="d-flex justify-content-between align-items-end">
+        <div>
+          <p class="warn-darker-color">
+            Los documentos que pesan más de 25Mb no serán enviados por correo
+            electrónico.
+            <br>
+            Sólo se muestran documentos con extension {{extension_valid | lowercase}}
+          </p>
+
+        </div>
+
+        <div>
+          <div class="col-sm">
+            <button type="submit" class="btn btn-primary" [disabled]="!firmaEjecutivo" (click)="enviarCotejo()">
+              Cotejar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

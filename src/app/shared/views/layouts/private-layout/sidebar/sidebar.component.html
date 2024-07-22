@@ -1,0 +1,70 @@
+<div class="sidebar-area bg-white box-shadow" [ngClass]="{ active: isToggled }"
+  [class.dark-sidebar]="themeService.isSidebarDark()" [class.right-sidebar]="themeService.isRightSidebar()"
+  [class.hide-sidebar]="themeService.isHideSidebar()">
+  <div class="logo bg-white">
+    <a href="javascript:void(0)" class="d-flex align-items-center">
+      <img src="assets/images/logos/logo-teggium-light.svg" alt="logo" />
+    </a>
+  </div>
+  <div class="burger-menu" (click)="toggle()" [ngClass]="{ active: isToggled }">
+    <span class="top-bar"></span>
+    <span class="middle-bar"></span>
+    <span class="bottom-bar"></span>
+  </div>
+  <ng-scrollbar visibility="hover" style="height: 100vh">
+    <div class="sidebar-inner">
+      <div class="sidebar-menu">
+        <mat-accordion>
+          <ng-container *ngFor="let modulo of sidebar?.modulos">
+            <span class="sub-title gray-color">{{ modulo.descripcion }}</span>
+
+            <ng-container *ngFor="let menu of modulo.menus">
+              <ng-container *ngIf="menu.submenus.length === 0">
+                <a
+                  routerLink="{{ menu.path }}"
+                  class="sidebar-menu-link"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                >
+                  <i class="{{ menu.icono }}"></i>
+                  <span class="title">{{ menu.descripcion }}</span>
+                </a>
+              </ng-container>
+
+              <ng-container *ngIf="menu.submenus.length > 0">
+                <mat-expansion-panel
+                  (opened)="panelOpenState = true"
+                  (closed)="panelOpenState = false"
+                  [expanded]="menu.expanded"
+                >
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      <i class="{{ menu.icono }}"></i>
+                      <span class="title">{{ menu.descripcion }}</span>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+
+                  <ul class="sidebar-sub-menu">
+                    <li
+                      class="sidemenu-item"
+                      *ngFor="let submenu of menu.submenus"
+                    >
+                      <a
+                        routerLink="/{{ submenu.path }}"
+                        routerLinkActive="active"
+                        [routerLinkActiveOptions]="{ exact: true }"
+                        class="sidemenu-link"
+                      >
+                        {{ submenu.descripcion }}
+                      </a>
+                    </li>
+                  </ul>
+                </mat-expansion-panel>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </mat-accordion>
+      </div>
+    </div>
+  </ng-scrollbar>
+</div>

@@ -1,0 +1,107 @@
+<app-share-breadcrumb [breadcrumbs]="breadcrumbs"></app-share-breadcrumb>
+<mat-card class="mb-25 teggium-card" *ngIf="folio">
+    <mat-card-header>
+        <div class="teggium-titulo-encabezado">
+            <h5 class="teggium-titulo">Validación afianzadora<span *ngIf="readonlyModule" class="title-readonlyModule">Modo consulta</span></h5>
+            <app-fnz-encabezado [folio]="folio.folio"></app-fnz-encabezado>
+            <app-fnz-flujo-consulta *ngIf="readonlyModule" 
+                [flujoConsulta]="folio.flujoConsulta">
+            </app-fnz-flujo-consulta>
+        </div>
+    </mat-card-header>
+    <mat-card-content>
+                <div class="mt-4"></div>
+                <form ngNativeValidate #formArchivo="ngForm">
+                    <mat-table *ngIf="documentosValidacion.length > 0" [dataSource]="documentosValidacion">
+
+                        <ng-container matColumnDef="documento">
+                            <mat-header-cell *matHeaderCellDef>Documento</mat-header-cell>
+                            <mat-cell *matCellDef="let element" [ngClass]="{
+                                      'border-active': element?.correcto, 
+                                      'border-normal': !element?.correcto }">
+                                {{element.documento}}
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="url">
+                            <mat-header-cell *matHeaderCellDef> Archivo</mat-header-cell>
+                            <mat-cell *matCellDef="let element; let index = index">
+                                <button class="btn" (click)="showFile(element)">
+                                    <mat-icon>visibility</mat-icon>
+                                </button>
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="correcto">
+                            <mat-header-cell *matHeaderCellDef>¿Correcto?</mat-header-cell>
+                            <mat-cell *matCellDef="let element; let index = index">
+                                <mat-slide-toggle [disabled]="readonlyModule" [(ngModel)]="element.correcto"
+                                    (change)="changeCorrecto(index,$event)" color="primary" ngModel
+                                    name="Check{{index}}{{element.id}}">
+                                    {{element.correcto ? "Sí" : "No"}}</mat-slide-toggle>
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="idMotivo">
+                            <mat-header-cell *matHeaderCellDef> Motivo rechazo </mat-header-cell>
+                            <mat-cell contenteditable=false *matCellDef="let element; let index = index">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Motivo rechazo</mat-label>
+                                    <mat-select placeholder="Motivo Rechazo" name="motivo{{index}}"
+                                        [(ngModel)]="element.idMotivo" [required]="element.correcto ?  '': 'null'"
+                                        [disabled]="element.correcto || readonlyModule">
+                                        <mat-option *ngFor="let option of motivos"
+                                            (onSelectionChange)="onChangeMotivo(index, option.clave)"
+                                            [value]=" element.correcto ?  null :  option.clave">
+                                            {{ option.descripcion }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="firmado">
+                            <mat-header-cell *matHeaderCellDef>Firmado</mat-header-cell>
+                            <mat-cell *matCellDef="let element; let index = index">
+                                <button class="btn">
+                                    <mat-icon>done</mat-icon>
+                                </button>
+                            </mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                    </mat-table>
+
+                </form>
+
+            <form [formGroup]="frmComentario">
+                <div class="row">
+                    <div class="col-md-12">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Comentarios</mat-label>
+                            <textarea matInput placeholder="Comentarios" formControlName="comentarios"
+                                rows="2" spellcheck="true"></textarea>
+                            <mat-icon matPrefix>comment</mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </form>
+        <br />
+
+        <div class="row">
+            <div class="col-md-12 text-center text-md-end">
+                <div class="col-12 text-center text-md-end">
+                    <button *ngIf="!readonlyModule" type="button" class="btn btn-secondary mx-1" (click)="click_reenviarDocumentos()">Reenviar
+                        documentos</button>
+                    <button type="button" (click)="return()" class="btn btn-danger mx-1">
+                        Cancelar
+                    </button>
+                    <button *ngIf="!readonlyModule" class="btn btn-primary" (click)="saveData()"
+                        [disabled]="frmComentario.invalid">Continuar</button>
+                </div>
+            </div>
+        </div>
+
+    </mat-card-content>
+</mat-card>

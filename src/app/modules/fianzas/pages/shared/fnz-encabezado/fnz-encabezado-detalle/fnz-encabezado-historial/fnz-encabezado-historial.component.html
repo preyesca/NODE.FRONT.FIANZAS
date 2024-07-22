@@ -1,0 +1,78 @@
+<section
+  id="tabla-expediente-archivos"
+  style="margin-top: 20px; margin-left: 10px; width: 97%"
+>
+  <div class="row">
+    <div class="col-md-12 tabla-no-responsive">
+      <mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="actividad">
+          <mat-header-cell *matHeaderCellDef> Actividad </mat-header-cell>
+          <mat-cell *matCellDef="let row" class="border-normal">
+            {{ row.actividad }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="estatus">
+          <mat-header-cell *matHeaderCellDef>Estatus</mat-header-cell>
+          <mat-cell *matCellDef="let row; let indexRow = index">
+            <span
+              [ngClass]="{
+                'estatus-nueva': row.estatusClave === estatusActividad.nueva,
+                'estatus-enprogreso': row.estatusClave === estatusActividad.enProgreso,
+                'estatus-completada': row.estatusClave === estatusActividad.completada,
+                'estatus-enreproceso': row.estatusClave === estatusActividad.enReproceso,
+                'estatus-cancelada': row.estatusClave === estatusActividad.cancelada,
+                'estatus-finalizada': row.estatusClave === estatusActividad.finalizada,
+                'estatus-suspendida': row.estatusClave === estatusActividad.suspendida,
+                'estatus-programada': row.estatusClave === estatusActividad.programada,
+              }"
+            >
+              {{ row.estatus }}
+            </span>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="usuario">
+          <mat-header-cell *matHeaderCellDef>Usuario </mat-header-cell>
+          <mat-cell *matCellDef="let row; let indexRow = index">
+            {{ row.usuario }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="perfil">
+          <mat-header-cell *matHeaderCellDef>Perfil</mat-header-cell>
+          <mat-cell *matCellDef="let row; let indexRow = index">
+            {{ row.rol }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="fechaAlta">
+          <mat-header-cell *matHeaderCellDef> Fecha alta </mat-header-cell>
+          <mat-cell *matCellDef="let row; let indexRow = index">
+            {{ row.fechaAlta | pipeDatetimeFormat }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="fechaFin">
+          <mat-header-cell *matHeaderCellDef> Fecha fin </mat-header-cell>
+          <mat-cell *matCellDef="let row; let indexRow = index">
+            {{ row.fechaFinal | pipeDatetimeFormat }}
+          </mat-cell>
+        </ng-container>
+        <mat-header-row
+          class="table-header"
+          *matHeaderRowDef="displayedColumns"
+        ></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+      <mat-paginator
+        [length]="length"
+        [pageSize]="pageSize"
+        [pageIndex]="pageIndex"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="onChangePage($event)"
+        showFirstLastButtons
+      ></mat-paginator>
+    </div>
+  </div>
+</section>

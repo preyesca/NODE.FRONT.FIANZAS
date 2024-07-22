@@ -1,0 +1,80 @@
+<form ngNativeValidate #formArchivo="ngForm">
+  <mat-table *ngIf="dataValidacion.length > 0" [dataSource]="dataSource">
+
+    <ng-container matColumnDef="documento">
+      <mat-header-cell *matHeaderCellDef >Documento</mat-header-cell>
+      <mat-cell *matCellDef="let element" [ngClass]="{
+                'border-active': element?.correcto, 
+                'border-normal': !element?.correcto }">
+        {{element.documento}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="url">
+      <mat-header-cell *matHeaderCellDef> Archivo</mat-header-cell>
+      <mat-cell *matCellDef="let element; let index = index">
+        <button class="btn" (click)="showFile(element.url)">
+          <mat-icon>visibility</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="correcto">
+      <mat-header-cell *matHeaderCellDef>¿Correcto?</mat-header-cell>
+      <mat-cell *matCellDef="let element; let index = index">
+        <mat-checkbox
+            color="primary"
+            color="primary"
+            name="correcto{{index}}"
+            (change)="changeCorrecto(index,$event)"
+            [checked]="element.correcto"
+            [disabled]="readonlyModule">
+        </mat-checkbox>{{ element.correcto ? "Sí" : "No" }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="idMotivo">
+      <mat-header-cell *matHeaderCellDef> Motivo rechazo </mat-header-cell>
+      <mat-cell contenteditable=false *matCellDef="let element; let index = index">
+        <mat-form-field appearance="outline">
+          <mat-label>Motivo rechazo</mat-label>
+          <mat-select placeholder="Motivo Rechazo" name="motivo{{index}}" [(ngModel)]="element.idMotivo" [required]="element.correcto ?  '': 'null'"
+            [disabled]="element.correcto || readonlyModule"  >
+            <mat-option *ngFor="let option of element?.motivos"
+                (onSelectionChange)="onChangeMotivo(index, option.clave)"
+                [value]="option.clave">
+              {{ option.descripcion }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="fechaVigencia">
+      <mat-header-cell *matHeaderCellDef> Fecha Vigencia </mat-header-cell>
+      <mat-cell contenteditable=false *matCellDef="let element; let index = index">
+        <mat-form-field appearance="outline">
+          <input matInput ngModel [matDatepicker]="fechaVigencia" placeholder="Fecha Vigencia"
+            [(ngModel)]="element.fechaVigencia"
+            name="fechaVigencia{{index}}"
+            [disabled]="!element.correcto || readonlyModule"/>
+          <mat-datepicker-toggle matSuffix [for]="fechaVigencia"></mat-datepicker-toggle>
+          <mat-datepicker #fechaVigencia></mat-datepicker>
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container *ngIf="isFirmado" matColumnDef="firmado">
+      <mat-header-cell *matHeaderCellDef>Firmado</mat-header-cell>
+      <mat-cell *matCellDef="let element; let index = index">
+        <button class="btn"  >
+          <mat-icon>done</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" (click) ="updateTableValidacion()"></mat-row>
+  </mat-table>
+
+</form>

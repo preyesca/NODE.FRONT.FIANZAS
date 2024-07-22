@@ -1,0 +1,134 @@
+<app-share-breadcrumb [breadcrumbs]="breadcrumbs"></app-share-breadcrumb>
+
+<mat-card class="mb-25 teggium-card">
+  <mat-card-header>
+    <h5 class="teggium-titulo">{{ title | translate }}</h5>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="frmConfiguracionAseguradora" (ngSubmit)="submit()">
+      <div class="row">
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>{{
+              "administracion.configuracion-aseguradora.form.pais" | translate
+              }}</mat-label>
+            <mat-select formControlName="pais">
+              <mat-select-trigger>
+                <div class="custom-select-country-select">
+                  <img *ngIf="currentCountry?.icon" class="custom-select-country-select-img" src="assets/images/catalogs/countries/{{
+                      currentCountry?.icon
+                    }}" alt="" />
+                  <span>{{ currentCountry?.descripcion }}</span>
+                </div>
+              </mat-select-trigger>
+              <mat-option *ngFor="let pais of paises" [value]="pais.clave">
+                <div class="custom-select-country-option">
+                  <img *ngIf="pais.icon" class="custom-select-country-option-img"
+                    src="assets/images/catalogs/countries/{{ pais.icon }}" alt="" /><span>{{ pais.descripcion }}</span>
+                </div>
+              </mat-option>
+            </mat-select>
+            <mat-icon matPrefix><span class="material-symbols-outlined">flag</span></mat-icon>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>{{
+              "administracion.configuracion-aseguradora.form.proyecto"
+              | translate
+              }}</mat-label>
+            <mat-select formControlName="proyecto">
+              <mat-option *ngFor="let item of proyecto" [value]="item._id">
+                {{ item.codigo }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matPrefix><span class="material-symbols-outlined">devices_fold</span></mat-icon>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>{{
+              "administracion.configuracion-aseguradora.form.aseguradora"
+              | translate
+              }}</mat-label>
+            <mat-select #matRef formControlName="aseguradora">
+              <!-- <mat-option value="0">Seleccionar aseguradora</mat-option> -->
+              <mat-option *ngFor="let item of aseguradora" [value]="item._id"
+                (onSelectionChange)="onChangeAseguradora(item,$event)">
+                {{ item.nombreComercial }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matPrefix><span class="material-symbols-outlined">cases</span></mat-icon>
+          </mat-form-field>
+        </div>
+
+        <br />
+        <div class="col-sm-12" style="margin-top: 10px;">
+
+          <div formArrayName="oficinas">
+            <div *ngFor="let oficina of getOficinas.controls;let iOficina=index" [formGroupName]="iOficina">
+              <!-- <label >{{oficina.value.descripcion | titlecase}}</label> -->
+              <h5 style="margin: 5px 0px;">
+                <span *ngIf="idProceso==2 && flagOficinas" class="title">{{oficina.value.descripcion | titlecase}}</span>
+              </h5>
+
+              <mat-form-field class="w-100" appearance="outline" floatLabel="always">
+                <mat-label>{{
+                  "administracion.configuracion-aseguradora.form.correo" | translate
+                  }}</mat-label>
+                <mat-chip-grid #chipGrid [disabled]="disableInputs">
+                  <mat-chip color="primary" [disabled]="disabledMatChip" *ngFor="let correo of oficina.value.correos"
+                    (removed)="remove(correo,iOficina)">
+                    {{ correo}}
+                    <button matChipRemove [attr.aria-label]="'remove ' + correo.name">
+                      <mat-icon>cancel</mat-icon>
+                    </button>
+                  </mat-chip>
+                  <input matinput placeholder="ejemplo@dominio.com" [matChipInputFor]="chipGrid"
+                    [matChipInputAddOnBlur]="true" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    (matChipInputTokenEnd)="add($event,oficina.value.descripcion,iOficina)" />
+                </mat-chip-grid>
+                <mat-error *ngIf="chipGrid.errorState"></mat-error>
+                <mat-icon matPrefix><span class="material-symbols-outlined">forward_to_inbox</span></mat-icon>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-12">
+          <div class="row" *ngIf="showLabelCorreos">
+            <figure>
+              <blockquote class="blockquote"></blockquote>
+              <figcaption class="blockquote-footer">
+                Para agregar más de un correo electrónico escriba uno válido y presione la tecla <kbd>Enter</kbd>.
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="row">
+            <div class="col-12" *ngIf="idProceso==2 && !flagOficinas">
+              <div class="alert alert-warning" role="alert">
+                La aseguradora no cuenta con oficinas.
+                <br>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row text-end">
+        <div class="col-12">
+          <button type="button" class="btn btn-danger mx-1" (click)="return()">
+            {{ action === 2 ? "Regresar" : "Cancelar" }}
+          </button>
+          <button type="submit" class="btn btn-primary" *ngIf="action !== 2">
+            {{ action === 0 ? "Guardar" : "Actualizar" }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,71 @@
+<app-share-breadcrumb [breadcrumbs]="breadcrumbs"></app-share-breadcrumb>
+<mat-card class="mb-25 teggium-card">
+    <mat-card-header>
+        <h5 class="teggium-titulo">Configuración de firma cotejo</h5>
+        <a class="btn btn-primary" (click)="create()">Nuevo</a>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-table 
+        (matSortChange)="sortChange($event)" 
+        mat-table 
+        matSort 
+        matSortDisableClear 
+        matSortActive="proyecto"
+        matSortDirection="asc"
+        [dataSource]="dataSource">
+
+            <ng-container matColumnDef="pais">
+                <mat-header-cell *matHeaderCellDef>País</mat-header-cell>
+                <mat-cell *matCellDef="let row" class="border-normal" >
+                    <div class="col-country">
+                        <img src="assets/images/catalogs/countries/{{row.paisIcon}}" alt="icon_flag">
+                        {{row.paisDescripcion}}
+                    </div>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="proyecto">
+                <mat-header-cell *matHeaderCellDef mat-sort-header >Proyecto</mat-header-cell>
+                <mat-cell *matCellDef="let row">{{row.proyecto}}</mat-cell>
+            </ng-container>
+
+            <!-- Action Column -->
+            <ng-container matColumnDef="action">
+                <mat-header-cell *matHeaderCellDef mat-sort-header class="col-action">Acciones</mat-header-cell>
+                <mat-cell *matCellDef="let row" class="col-action">
+                    <button type="button" mat-button class="position-relative dot-btn p-0 bg-transparent border-none"
+                        [matMenuTriggerFor]="actionMenu">
+                        <i class="ri-more-fill"></i>
+                    </button>
+                    <mat-menu #actionMenu="matMenu" class="dotMenu two monthMenu" xPosition="before">
+                        <button routerLink="../configurador-firma-contejo/{{row._id}}/edit" mat-menu-item type="button"
+                            class="bg-transparent border-none position-relative">
+                            <i class="ri-edit-line"></i>Editar
+                        </button>
+                        <button routerLink="../configurador-firma-contejo/{{row._id}}/show" mat-menu-item type="button"
+                            class="bg-transparent border-none position-relative">
+                            <i class="ri-eye-line"></i>Ver
+                        </button>
+                    </mat-menu>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns" class="table-header"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+            <tr class="row-empty" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No hay información para mostrar.</td>
+            </tr>
+        </mat-table>
+
+        <mat-paginator
+        [length]="length"
+        [pageSize]="pageSize"
+        [pageIndex]="pageIndex"
+        [pageSizeOptions]="itemsPorPage"
+        (page)="onChangePage($event)"
+        showFirstLastButtons
+      ></mat-paginator>
+       
+    </mat-card-content>
+</mat-card>

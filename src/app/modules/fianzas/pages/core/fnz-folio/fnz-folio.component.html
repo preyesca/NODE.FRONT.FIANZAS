@@ -1,0 +1,71 @@
+<app-share-breadcrumb [breadcrumbs]="breadcrumbs"></app-share-breadcrumb>
+
+<mat-card class="mb-25 teggium-card">
+  <mat-card-header>
+    <h5 class="teggium-titulo">
+      {{ "fianzas.core.folio.nuevo.title" | translate }}
+    </h5>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="frmFolio" (ngSubmit)="upload()">
+      <div class="row">
+        <div
+          class="col-md-8"
+          (dragover)="onDragover($event)"
+          (drop)="onDrop($event)"
+        >
+          <mat-form-field appearance="outline" style="width: 100%">
+            <mat-label
+              >{{ "fianzas.core.folio.nuevo.placeholderFile" | translate }}
+              <b>.xls, .xlsx</b></mat-label
+            >
+            <mat-icon
+              class="attach-file"
+              mat-icon-button
+              matSuffix
+              (click)="selectFile(inputFile)"
+            >
+              <span class="material-symbols-outlined">attach_file</span>
+            </mat-icon>
+            <input type="text" readonly matInput formControlName="file" />
+            <input
+              type="file"
+              hidden
+              #inputFile
+              [accept]="allowedExtensions"
+              (change)="handleFileInputChange(inputFile.files)"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-8">
+          <div class="row text-end">
+            <div class="col-12">
+              <button
+                type="button"
+                class="btn btn-danger mx-1"
+                [disabled]="file == null || uploading"
+                (click)="clear()"
+              >
+                {{ "general.options.cancel" | translate }}
+              </button>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="frmFolio.invalid || uploading"
+              >
+                {{
+                  (uploading
+                    ? "general.options.uploading"
+                    : "general.options.upload"
+                  ) | translate
+                }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

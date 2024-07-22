@@ -1,0 +1,119 @@
+<form ngNativeValidate #formArchivo="ngForm">
+  <div *ngIf="isUploading">
+    <span>Espere un momento por favor...</span>
+    <mat-progress-bar mode="indeterminate">
+      {{ uploadProgress }}%</mat-progress-bar
+    >
+  </div>
+  <ng-container *ngIf="!isUploading">
+    <div class="custom-input-file col-7" (click)="(fileInputMultiple.value)">
+      <input
+        #fileInputMultiple
+        type="file"
+        id="fichero-tarifas"
+        class="input-file"
+        [accept]="extension_valid"
+        (change)="selectFiles(fileInputMultiple.files)"
+        multiple
+      />
+      <img src="assets/images/icons/folder-open-1.svg" width="100px" />
+      <h5>Seleccione sus documentos</h5>
+      <p class="file-drag-info">O arrastre los archivos aquí...</p>
+    </div>
+    <div style="overflow: hidden">
+      <form #docsForm="ngForm">
+        <div *ngIf="this.dataSource.data.length > 0">
+          <mat-table class="table-general" mat-table [dataSource]="dataSource">
+            <mat-header-row
+              class="table-header"
+              *matHeaderRowDef="displayedColumns"
+            ></mat-header-row>
+            <mat-row
+              *matRowDef="let row; let i = index; columns: displayedColumns"
+            ></mat-row>
+
+            <ng-container
+              matColumnDef="nombreOriginal"
+              matColumnDisplay="false"
+            >
+              <mat-header-cell *matHeaderCellDef> Archivo </mat-header-cell>
+              <mat-cell
+                *matCellDef="let row; let index = index"
+                class="border-normal"
+              >
+                {{ row.nombreOriginal }}
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="documento">
+              <mat-header-cell *matHeaderCellDef> Documento </mat-header-cell>
+              <mat-cell
+                contenteditable="false"
+                *matCellDef="let row; let index = index"
+              >
+                <mat-form-field appearance="outline" style="width: 100%">
+                  <mat-select
+                    ngModel
+                    name="documento{{ index }}"
+                    placeholder="Documento"
+                    (selectionChange)="onChangeDocumento(index, $event.value)"
+                    required
+                  >
+                    <mat-option
+                      class="option"
+                      *ngFor="let option of documentos"
+                      [value]="option.documento"
+                      >{{ option.nombre }}</mat-option
+                    >
+                  </mat-select>
+                </mat-form-field>
+              </mat-cell>
+            </ng-container>
+
+            <!-- <ng-container matColumnDef="fechaVigencia">
+                            <mat-header-cell *matHeaderCellDef> Fecha Vigencia </mat-header-cell>
+                            <mat-cell contenteditable=false *matCellDef="let row;let index=index">
+                                <mat-form-field appearance="outline">
+                                    <input matInput ngModel [matDatepicker]="fechaVigencia"
+                                        name="fechaVigencia{{index}}" placeholder="Fecha Vigencia*"
+                                        (dateChange)="onChangeFechaVigencia(index,$event.value)"
+                                        [required]="row.vigencia" [disabled]="!row.vigencia" [min]="minDateFin"  />
+                                    <mat-datepicker-toggle matSuffix [for]="fechaVigencia"></mat-datepicker-toggle>
+                                    <mat-datepicker #fechaVigencia></mat-datepicker>
+                                </mat-form-field>
+                            </mat-cell>
+                        </ng-container> -->
+
+            <ng-container matColumnDef="operaciones">
+              <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+              <mat-cell *matCellDef="let row; let index = index">
+                <button class="btn mx-3" (click)="deleteFile(index)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+
+                <button class="btn" (click)="showFile(index)">
+                  <mat-icon>visibility</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+          </mat-table>
+        </div>
+        <br />
+        <div *ngIf="this.dataArchivos.length > 0" class="row mb-5">
+          <div class="col-md-12 text-end">
+            <button class="btn btn-danger mx-3" (click)="clear()">
+              Limpiar
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              (click)="uploadFiles(docsForm)"
+            >
+              Subir
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </ng-container>
+</form>

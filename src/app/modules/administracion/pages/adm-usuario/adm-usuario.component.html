@@ -1,0 +1,155 @@
+<app-share-breadcrumb [breadcrumbs]="breadcrumbs"></app-share-breadcrumb>
+
+<mat-card class="mb-25 teggium-card">
+  <mat-card-header>
+    <h5 class="teggium-titulo">
+      {{ "administracion.usuario.titlePlural" | translate }}
+    </h5>
+    <a class="btn btn-primary" routerLink="/administracion/usuarios/crear">
+      {{ "general.options.create" | translate }}
+    </a>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-table 
+      (matSortChange)="sortChange($event)" 
+      mat-table 
+      matSort 
+      matSortDisableClear 
+      [dataSource]="dataSource">
+      <!-- <ng-container matColumnDef="paisDescripcion">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>{{
+          "administracion.usuario.table.pais" | translate
+        }}</mat-header-cell>
+        <mat-cell
+          *matCellDef="let row"
+          [ngClass]="{
+            'border-active': row?.activo === true,
+            'border-inactive': row?.activo === false
+          }"
+        >
+          <div class="col-country">
+            <img
+              src="assets/images/catalogs/countries/{{ row.paisIcon }}"
+              alt="icon_flag"
+            />
+            {{ row.paisDescripcion }}
+          </div>
+        </mat-cell>
+      </ng-container> -->
+
+      <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>{{
+          "administracion.usuario.table.nombre" | translate
+        }}</mat-header-cell>
+        <mat-cell *matCellDef="let row" [ngClass]="{
+          'border-active': row?.activo === true,
+          'border-inactive': row?.activo === false
+        }">{{ row.nombreCompleto }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="correoElectronico">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>{{
+          "administracion.usuario.table.correoElectronico" | translate
+        }}</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.correoElectronico }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="estatus">
+        <mat-header-cell *matHeaderCellDef>{{
+          "administracion.usuario.table.estatus" | translate
+        }}</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.estatus }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="sesionAbierta">
+        <mat-header-cell *matHeaderCellDef>{{
+          "administracion.usuario.table.sesionAbierta" | translate
+        }}</mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <div class="{{ row.sesionAbierta ? 'tag-active' : 'tag-inactive' }}">
+            {{ row.sesionAbierta ? "Sí" : "No" }}
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <!-- <ng-container matColumnDef="nombreRol">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>{{
+          "administracion.usuario.table.rol" | translate
+        }}</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.nombreRol }}</mat-cell>
+      </ng-container> -->
+
+      <!-- Action Column -->
+      <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef class="col-action">{{
+          "general.options.actions" | translate
+        }}</mat-header-cell>
+        <mat-cell *matCellDef="let row" class="col-action">
+          <button
+            type="button"
+            mat-button
+            class="position-relative dot-btn p-0 bg-transparent border-none"
+            [matMenuTriggerFor]="actionMenu"
+          >
+            <i class="ri-more-fill"></i>
+          </button>
+          <mat-menu
+            #actionMenu="matMenu"
+            class="dotMenu two monthMenu"
+            xPosition="before"
+          >
+            <button
+              mat-menu-item
+              type="button"
+              class="bg-transparent border-none position-relative"
+              routerLink="/administracion/usuarios/actualizar/{{ row._id }}"
+            >
+              <i class="ri-edit-line"></i
+              >{{ "general.options.edit" | translate }}
+            </button>
+            <button
+              mat-menu-item
+              type="button"
+              class="bg-transparent border-none position-relative"
+              routerLink="/administracion/usuarios/ver/{{ row._id }}"
+            >
+              <i class="ri-eye-line"></i
+              >{{ "general.options.view" | translate }}
+            </button>
+            <button
+            mat-menu-item
+            type="button"
+            mat-menu-item *ngIf="this.userSession.proyecto.rol.clave == 1 && row.sesionAbierta "
+            class="bg-transparent border-none position-relative"
+            (click)="confirmLogout( row._id, row.nombreCompleto)"
+          >
+            <i class="ri-lock-line"></i
+            >{{ "general.options.logout" | translate }}
+          </button>
+          </mat-menu>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row
+        *matHeaderRowDef="displayedColumns"
+        class="table-header"
+      ></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+      <tr class="row-empty" *matNoDataRow>
+        <td class="mat-cell" colspan="4">
+          {{ "general.table.emptyResults" | translate }}
+        </td>
+      </tr>
+    </mat-table>
+
+    <mat-paginator
+    [length]="length"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    [pageSizeOptions]="itemsPorPage"
+    (page)="onChangePage($event)"
+    showFirstLastButtons
+  ></mat-paginator>
+  </mat-card-content>
+</mat-card>

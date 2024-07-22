@@ -1,0 +1,104 @@
+<div style="margin-bottom: 15px"></div>
+
+<mat-accordion>
+  <mat-expansion-panel
+    #mepExpedienteDigital
+    (opened)="panelOpenState = true"
+    (closed)="panelOpenState = false"
+  >
+    <mat-expansion-panel-header class="toggle">
+      <mat-panel-title
+        [ngClass]="{
+          'panel-title': true,
+          active: mepExpedienteDigital.expanded
+        }"
+        ><span class="mititle">Expediente digital</span>
+      </mat-panel-title>
+      <mat-panel-description></mat-panel-description>
+    </mat-expansion-panel-header>
+    <ng-template matExpansionPanelContent>
+      <app-fnz-encabezado-expediente></app-fnz-encabezado-expediente>
+    </ng-template>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel
+    #mepHistorialExpediente
+    (opened)="panelOpenState = true"
+    (closed)="panelOpenState = false"
+  >
+    <mat-expansion-panel-header class="toggle">
+      <mat-panel-title
+        [ngClass]="{
+          'panel-title': true,
+          active: mepHistorialExpediente.expanded
+        }"
+        ><span class="mititle">Historial del expediente</span></mat-panel-title
+      >
+      <mat-panel-description></mat-panel-description>
+    </mat-expansion-panel-header>
+    <ng-template matExpansionPanelContent>
+      <app-fnz-encabezado-historial></app-fnz-encabezado-historial>
+    </ng-template>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel
+    #mepBitacoraActividades
+    (opened)="panelOpenState = true"
+    (closed)="panelOpenState = false"
+  >
+    <mat-expansion-panel-header class="toggle">
+      <mat-panel-title
+        [ngClass]="{
+          'panel-title': true,
+          active: mepBitacoraActividades.expanded
+        }"
+        ><span class="mititle">Bitácora de actividades</span>
+      </mat-panel-title>
+      <mat-panel-description></mat-panel-description>
+    </mat-expansion-panel-header>
+    <ng-template matExpansionPanelContent>
+      <app-fnz-encabezado-bitacora></app-fnz-encabezado-bitacora>
+    </ng-template>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel
+    #mepHistorialTelefonico
+    (opened)="panelOpenState = true"
+    (closed)="panelOpenState = false"
+  >
+    <mat-expansion-panel-header class="toggle">
+      <mat-panel-title
+        [ngClass]="{
+          'panel-title': true,
+          active: mepHistorialTelefonico.expanded
+        }"
+        ><span class="mititle">Historial telefónico</span>
+      </mat-panel-title>
+      <mat-panel-description></mat-panel-description>
+    </mat-expansion-panel-header>
+    <ng-template matExpansionPanelContent>
+      <app-fnz-historial-contacto-telefonico></app-fnz-historial-contacto-telefonico>
+    </ng-template>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel
+    *ngIf="showComponentCotejo"
+    #mepCotejo
+    (opened)="panelOpenState = true"
+    (closed)="panelOpenState = false"
+  >
+    <mat-expansion-panel-header class="toggle">
+      <mat-panel-title
+        [ngClass]="{
+          'panel-title': true,
+          active: mepCotejo.expanded
+        }"
+        ><span class="mititle">Documentos a cotejar</span>
+      </mat-panel-title>
+      <mat-panel-description></mat-panel-description>
+    </mat-expansion-panel-header>
+    <ng-template matExpansionPanelContent>
+      <app-fnz-encabezado-cotejo></app-fnz-encabezado-cotejo>
+    </ng-template>
+  </mat-expansion-panel>
+</mat-accordion>

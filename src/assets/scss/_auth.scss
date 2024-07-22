@@ -1,0 +1,89 @@
+.wrapper-login {
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 14%;
+}
+
+.logo {
+  display: block;
+  width: 420px;
+  margin: 0px auto 20px;
+  border-radius: 20px;
+  padding: 7px 25px 7px 25px;
+}
+
+.form-holder {
+  background: #ffffff;
+  width: 430px;
+  max-width: 90%;
+  padding: 25px 50px;
+  border-radius: 22px 0 22px 0;
+  box-shadow: 1px 0px 12px 0px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}
+
+.form {
+  width: 100%;
+  & h3 {
+    color: #60ccd6;
+  }
+
+  &.form-group {
+    width: 90%;
+    margin: 0px auto 5px;
+    padding: 7px;
+    position: relative;
+
+    & img {
+      width: 26px;
+      position: absolute;
+      left: 15px;
+      top: 15px;
+    }
+
+    & a {
+      color: #0f0f0f;
+      text-decoration: none;
+      font-size: 14px;
+      &:hover {
+        color: #0f0f0f;
+      }
+    }
+  }
+}
+
+.form-group-button {
+  width: 70%;
+  margin: 10px auto 10px;
+  padding: 7px;
+  position: relative;
+
+  & button {
+    width: 100%;
+    padding: 10px;
+    background: #0f0f0f;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+
+    &:hover {
+      background: #2d2d2d;
+    }
+  }
+}
+
+.form-group-resetPass {
+  text-align: center;
+  font-weight: 500;
+  font-size: 15px;
+
+  & a {
+    color: #60ccd6;
+  }
+}

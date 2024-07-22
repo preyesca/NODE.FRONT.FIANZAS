@@ -1,0 +1,87 @@
+<app-share-breadcrumb [breadcrumbs]="breadcrumbs"></app-share-breadcrumb>
+
+<mat-card class="mb-25 teggium-card">
+    <mat-card-header>
+        <h5 class="teggium-titulo">Documentos</h5>
+        <a class="btn btn-primary" routerLink="crear">Nuevo</a>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="">
+            <mat-table 
+            (matSortChange)="sortChange($event)"
+            matSortActive="nombre"
+             matSortDirection="asc"
+            mat-table 
+            matSort 
+            matSortDisableClear 
+            [dataSource]="dataSource">
+                <ng-container matColumnDef="pais">
+                    <mat-header-cell *matHeaderCellDef>País</mat-header-cell>
+                    <mat-cell *matCellDef="let row" [ngClass]="{
+                        'border-active': row?.estatus === 'Activo', 
+                        'border-inactive': row?.estatus == 'Inactivo' }">
+                        <div class="col-country">
+                            <img src="assets/images/catalogs/countries/{{row.paisIcon}}" alt="icon_flag">
+                            {{row.pais}}
+                        </div>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="categoria">
+                    <mat-header-cell *matHeaderCellDef>Categoria</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.categoria}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="estatus">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Estatus</mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <div class="{{row.estatus == 'Activo' ? 'tag-active': 'tag-inactive'}}">
+                            {{row.estatus}}
+                        </div>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="nombre">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Documento</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.nombre}}</mat-cell>
+                </ng-container>
+
+                <!-- Action Column -->
+                <ng-container matColumnDef="action">
+                    <mat-header-cell *matHeaderCellDef class="col-action">Acciones</mat-header-cell>
+                    <mat-cell *matCellDef="let row" class="col-action">
+                        <button type="button" mat-button
+                            class="position-relative dot-btn p-0 bg-transparent border-none"
+                            [matMenuTriggerFor]="actionMenu">
+                            <i class="ri-more-fill"></i>
+                        </button>
+                        <mat-menu #actionMenu="matMenu" class="dotMenu two monthMenu" xPosition="before">
+                            <button routerLink="../documentos/actualizar/{{row._id}}" mat-menu-item type="button" class="bg-transparent border-none position-relative">
+                                <i class="ri-edit-line"></i>Editar
+                            </button>
+                            <button  routerLink="../documentos/ver/{{row._id}}" mat-menu-item type="button" class="bg-transparent border-none position-relative">
+                                <i class="ri-eye-line"></i>Ver
+                            </button>
+                        </mat-menu>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns" class="table-header"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+                <tr class="row-empty" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No hay información para mostrar.</td>
+                </tr>
+            </mat-table>
+
+            <mat-paginator
+            [length]="length"
+            [pageSize]="pageSize"
+            [pageIndex]="pageIndex"
+            [pageSizeOptions]="itemsPorPage"
+            (page)="onChangePage($event)"
+            showFirstLastButtons
+          ></mat-paginator>
+        </div>
+    </mat-card-content>
+</mat-card>

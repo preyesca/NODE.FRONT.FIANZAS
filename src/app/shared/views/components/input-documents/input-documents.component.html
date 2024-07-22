@@ -1,0 +1,9 @@
+<mat-form-field appearance="outline" style="width: 100%;">
+    <mat-label>{{ multiple ? 'Cargar archivos' : 'Cargar archivo' }}</mat-label>
+    <mat-icon style="cursor: pointer;" mat-icon-button matSuffix (click)="clickIcon(f_input)">
+        <span class="material-symbols-outlined">attach_file</span>
+    </mat-icon>
+    <input  type="text" readonly matInput [formControl]="convertToFormControl(_control.control)" />
+    <input  type="file" [multiple]="multiple" [accept]="accept" hidden #f_input (change)="handleFileInputChange(f_input.files!)" />
+    <!-- <mat-error>this field is required</mat-error> -->
+</mat-form-field>

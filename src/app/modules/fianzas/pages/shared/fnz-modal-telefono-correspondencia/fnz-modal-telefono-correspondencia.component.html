@@ -1,0 +1,71 @@
+
+<div class="modal fade d-flex align-items-center justify-content-center show" tabindex="-1" role="dialog" style="display: block;">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+
+      <div style="padding: 20px;">
+        <mat-card-header >
+            <h5 class="teggium-titulo">Datos teléfono</h5>
+        </mat-card-header>
+      </div>
+        <div class="modal-body">
+          
+            <form autocomplete="off" [formGroup]="frmTelefonos" (ngSubmit)="click_guardar()">
+              <div class="row">
+                <input type="hidden" formControlName="id">
+                <input type="hidden" formControlName="folio">
+                <div class="col-sm-4">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Teléfono contacto</mat-label>
+                    <input  InputRestriction="NUMBERS" matInput formControlName="telefonoCorrespondencia" 
+                           minlength="8" maxlength="13" min="0">
+                  </mat-form-field>
+                  <mat-error *ngIf="frmTelefonos.controls['telefonoCorrespondencia'].errors?.['minlength']">El N° debe contener entre 8 y 10 dígitos</mat-error>
+                </div>
+
+                <div class="col-sm-8">                  
+                  <mat-form-field class="w-100" appearance="outline" floatLabel="always">
+                      <mat-label>Extensión Contacto</mat-label>
+                      <mat-chip-grid #chipGrid>
+                          <mat-chip *ngFor="let e of extension" (removed)="remove(e)">
+                              {{e.name}}
+                              <button matChipRemove [attr.aria-label]="'remove ' + e.name">
+                                  <mat-icon>cancel</mat-icon>
+                              </button>
+                          </mat-chip>
+                          <input 
+                              matinput
+                              type="number"
+                              InputRestriction="NUMBERS"
+                              formControlName="extension"
+                              placeholder="ejemplo: 1010, 1020, 1030" 
+                              [matChipInputAddOnBlur]="true"
+                              [matChipInputFor]="chipGrid"
+                              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                              (matChipInputTokenEnd)="add($event)"
+                               />
+                      </mat-chip-grid>
+                  </mat-form-field>
+                  
+                  <mat-label>Presione enter para agregar una nueva extensión</mat-label>
+              </div>
+
+              </div>
+            </form>
+
+            <div class="text-end mt-5">
+              <button class="btn btn-sm btn-danger mx-1" (click)="onCloseModal()">Cancelar</button>
+              <button type="submit" class="btn btn-sm btn-primary" (click)="click_guardar()"
+                     >
+                    Aceptar
+              </button>
+          </div>
+
+          <ng-content>
+          </ng-content>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop fade show"></div>
+  

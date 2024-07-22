@@ -1,0 +1,19 @@
+.warn-darker-color {
+  color: #f91919;
+}
+
+div.c-encabezado-body {
+
+  div.row>div {
+    margin: 6px 0px;
+
+    label {
+      color: var(--dangerColor);
+      font-weight: bold;
+    }
+
+    span {
+      margin-left: 5px;
+    }
+  }
+}
